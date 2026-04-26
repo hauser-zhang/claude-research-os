@@ -4,7 +4,7 @@ description: Every code working directory must have a human-readable README.md a
 type: feedback
 ---
 
-代码工作目录（如 model_interpretation/）必须同时维护 README.md 和 CLAUDE.md。
+代码工作目录（如 `<some-module>/`）必须同时维护 README.md 和 CLAUDE.md。
 
 **Why:** 用户需要人类可读的使用指南，不只是给 Claude 看的上下文。特别需要新旧结果对照表，让用户知道重构前的哪个输出对应重构后的哪个路径。
 

@@ -19,7 +19,7 @@ type: feedback
 
 ---
 
-## ⚠️ 崩溃判断铁律（2026-04-12 血泪教训）
+## ⚠️ 崩溃判断铁律
 
 **禁止用 GPU 利用率判断卡死。** DataLoader 加载间隙 GPU=0% 是正常的。用此条件会误杀健康训练，导致从头重跑浪费数小时 GPU。
 
@@ -30,8 +30,6 @@ type: feedback
 
 ### 崩溃后 Resume（必须用原目录）
 ```bash
-python -m vformer.train --config <YAML> --continue_train --resume_dir <原run目录>
+python -m <your-training-module>.train --config <YAML> --continue_train --resume_dir <原run目录>
 ```
 不加 `--resume_dir` 会新建时间戳目录从头训练，浪费 GPU 时间。
-
-**规范文件：** `.claude/rules/remote-server-operations.md` §长时间任务监控规范

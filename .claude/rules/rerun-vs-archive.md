@@ -18,7 +18,7 @@
 
 ### 1. 只清当前任务目录
 
-改 MGS bug → 只清 `HeteroSAGEhmcn_gnn-only_5-2048-1024/figures/`。
+改某个 case study 的 bug → 只清该 case study 自己的 `figures/` 目录。
 
 **禁止**：
 - 清其他 case study 的输出
@@ -27,7 +27,7 @@
 
 ### 2. 复用 pipeline 内建清理逻辑
 
-优先用 pipeline 自带的清理函数（如 MGS `_cleanup_figures_dir`）。
+优先用 pipeline 自带的清理函数（如 `_cleanup_figures_dir`）。
 如无 → 手动列出要删的 png / svg / csv，**逐个删除并打日志**（不要 `rm -rf`）。
 
 ### 3. 禁止 `_v2` / `_v3` 文件后缀
@@ -40,12 +40,12 @@
 
 ## 典型案例
 
-### ✅ 正确：MGS bug 修复（2026-04-20）
+### ✅ 正确：pipeline bug 修复（短重跑路径）
 
-- test-split filter 修复
-- pipeline 27 秒跑完
+- 修了某个 evaluator 的 filter bug
+- pipeline 几十秒跑完
 - 清旧 10 个 png/svg，原地重跑，不留 `_v2`
-- git commit 记录 "fix: test-split filter in MGS evaluator"
+- git commit 记录 "fix: <具体 bug 描述>"
 
 ### ❌ 错误：堆版本后缀
 
