@@ -183,10 +183,17 @@ See [docs/architecture.md](docs/architecture.md) for detailed diagrams and mecha
 
 research-os/                (L2 · this repo — framework)
   ├─ CLAUDE.md              ← framework constitution
-  ├─ .claude/rules/         ← archival workflows (Feishu / Notion)
-  ├─ .claude/skills/        ← brainstorming / debugging / TDD (bundled)
-  ├─ wiki/                  ← cross-project timeless knowledge
-  ├─ memory/                ← ~20 desensitized feedback notes
+  ├─ .claude/rules/         ← archival workflows
+  ├─ .claude/skills/        ← bundled skills
+  ├─ wiki/                  ← timeless knowledge
+  ├─ raw/                   ← immutable sources
+  ├─ learning/              ← reading digest
+  ├─ writing/               ← paper material
+  ├─ journal/               ← daily notebook
+  ├─ schedule/              ← ToDo + goals
+  ├─ meta/                  ← self-evolving layer
+  ├─ memory/                ← cross-project feedback
+  ├─ decisions/             ← ADRs
   └─ projects/
       └─ <your-project>/    (L3 · per-project)
           ├─ CLAUDE.md      ← project charter + remote env

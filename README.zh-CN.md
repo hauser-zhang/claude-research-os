@@ -183,10 +183,17 @@ rm HOW-TO-USE-THIS-EXAMPLE.md    # 删除只给示范用的说明文件
 
 research-os/                (L2 · 本仓库 —— 框架层)
   ├─ CLAUDE.md              ← 框架宪法
-  ├─ .claude/rules/         ← 归档工作流（飞书 / Notion）
-  ├─ .claude/skills/        ← brainstorming / debugging / TDD（已打包）
-  ├─ wiki/                  ← 跨项目无时间知识
-  ├─ memory/                ← ~20 条脱敏 feedback
+  ├─ .claude/rules/         ← 归档工作流
+  ├─ .claude/skills/        ← 预装 skill
+  ├─ wiki/                  ← 跨项目长期知识
+  ├─ raw/                   ← 原始源（只读）
+  ├─ learning/              ← 阅读消化
+  ├─ writing/               ← 论文素材
+  ├─ journal/               ← 每日日记
+  ├─ schedule/              ← ToDo 和长期目标
+  ├─ meta/                  ← 自演化层
+  ├─ memory/                ← 跨项目 feedback
+  ├─ decisions/             ← ADR
   └─ projects/
       └─ <your-project>/    (L3 · 单项目)
           ├─ CLAUDE.md      ← 项目宗法 + 远程环境
