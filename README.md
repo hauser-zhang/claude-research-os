@@ -198,6 +198,23 @@ Claude Code's cascading `CLAUDE.md` loader walks the directory tree and layers a
 
 For the full diagram and the Dual-Primary / five-stage / self-evolving mechanics → [docs/architecture.md](docs/architecture.md).
 
+### What each top-level folder does
+
+The layout reflects the Dual-Primary split (source → knowledge → process → output) plus a self-evolving layer on top:
+
+| Folder | Role |
+|--------|------|
+| `projects/<name>/` | Your research projects (L3) — charter, tracks, threads, project-local rules |
+| `wiki/` | Cross-project timeless knowledge — papers, concepts, datasets, benchmarks, syntheses |
+| `raw/` | Immutable source material — PDFs, clipped blog / GitHub notes, `manifest.json` |
+| `learning/` | Non-task-driven reading digest — blog / GitHub / tutorial notes; can later promote to `wiki/syntheses/` |
+| `writing/<target>/` | Paper / thesis material per writing target — chapter structure + figures + five-layer panel material |
+| `journal/` | Daily lab notebook — cross-thread process observations + today's frictions |
+| `schedule/` | Cross-thread ToDo and long-term goals — paper deadlines, weekly routines |
+| `meta/` | Self-evolving layer — frictions backlog, weekly reviews, improvements backlog |
+| `memory/` | Cross-project feedback notes — war stories the maintainer keeps adding |
+| `decisions/` | ADRs — architectural decisions with rationale, reversibly documented |
+
 ---
 
 ## How to know it's working
