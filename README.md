@@ -2,16 +2,15 @@
 
 # claude-research-os
 
-**Your research, as an operating system.**
+**The research OS for the AI-agent era.**
 
-A Claude Code template for researchers who run more than one project.
-Three scopes, one cross-project wiki, decisions that survive session resets, batteries-included skills.
+An open-source Claude Code template that turns multi-project research into a layered operating system — so PhD students and researchers can compound knowledge, experience, and decisions across sessions, projects, and years instead of losing them to scrollback.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Claude Code](https://img.shields.io/badge/powered%20by-Claude%20Code-8a63d2)](https://docs.anthropic.com/en/docs/claude-code)
-[![Status](https://img.shields.io/badge/status-v1.2%20dogfooding-orange)](CLAUDE.md)
+[![Status](https://img.shields.io/badge/status-v1.4%20dogfooding-orange)](CLAUDE.md)
 
-[Architecture](docs/architecture.md) · [Philosophy](docs/philosophy.md) · [ADRs](decisions/) · [Skills catalog](.claude/skills/_catalog.md)
+[Architecture](docs/architecture.md) · [Philosophy](docs/philosophy.md) · [ADRs](decisions/) · [Skills catalog](.claude/skills/_catalog.md) · [Example project](projects/_example/)
 
 **English | [简体中文](README.zh-CN.md)**
 
@@ -21,15 +20,19 @@ Three scopes, one cross-project wiki, decisions that survive session resets, bat
 
 ## What is Research OS?
 
-Research OS turns multi-project academic research into a layered operating system on top of Claude Code. It splits rules into three physical scopes (global → framework → per-project), accumulates cross-project knowledge in a wiki that **compounds** instead of scattering, and records every architectural decision as an ADR so the next session — or the next month — can actually pick up where you left off.
+Research OS turns multi-project academic research into a layered operating system on top of Claude Code.
 
-It ships **batteries included**: a curated set of skills (some original, some mirrored from the community with full attribution) that `git clone` installs for free.
+Working with AI agents every day shifts the bottleneck of a research career. Generating text and code is cheap; **organising what you've decided, learned, and rejected across dozens of sessions is not**. PhD students and researchers who run more than one project end up fighting the same walls — decisions disappear into chat scrollback, literature gets re-read three times, ideas scatter across Feishu / Notion / GitHub issues, and the moment a second project lands, the single `CLAUDE.md` file collapses under its own weight.
+
+`claude-research-os` is a template that fixes this with four layered mechanisms (three-scope cascade, Dual-Primary knowledge, five-stage flow, batteries-included skills) and ships with a working example project so you can bootstrap your own in ~30 minutes with one prompt to Claude.
+
+**Open the box, talk to Claude, run your research.**
 
 ---
 
-## The Problem
+## The problem
 
-Four things every solo researcher runs into with Claude Code after a few weeks:
+Four walls every solo researcher runs into with Claude Code after a few weeks:
 
 > *"Didn't we already decide against this architecture? I can't find where we discussed it. Let me just re-reason from scratch."*
 
@@ -39,58 +42,97 @@ Four things every solo researcher runs into with Claude Code after a few weeks:
 
 > *"I need the SSH conventions from project A. But they're mixed with A's wave-migration state. Copy-paste and hope?"*
 
-Root cause: Claude Code's default single `CLAUDE.md` + flat `.claude/` cannot hold multi-project research.
+Root cause: Claude Code's default single `CLAUDE.md` + flat `.claude/` cannot hold multi-project research. **Sessions are cheap; cross-session continuity is what's missing.**
 
 ---
 
-## The Solution
+## Why researchers stay
 
-Four design choices, each addressing one of the problems above:
+Five concrete benefits you feel within the first week:
 
-| Choice | Addresses | Where it lives |
-|--------|-----------|----------------|
-| **Three-scope cascade** — `L1 global / L2 framework / L3 project` `CLAUDE.md` layered load | "Copy-paste and hope" | Repo root + `projects/<name>/` |
-| **Dual-Primary knowledge** — timeless facts in `wiki/`, time-ordered process in `tracks/<t>/<thread>/`, bidirectional links | "Already summarised this" | `wiki/` (L2) + `projects/<name>/tracks/` (L3) |
-| **Five-stage flow + ADRs + frictions backlog** — every decision and rejected idea leaves a trail | "Didn't we already decide" | `decisions/` + `meta/` + thread `00..04.md` |
-| **Batteries-included skills** — `git clone` comes with `own/` + `upstream/` skills (Karpathy guidelines, superpowers brainstorming / TDD / debugging) | "Ideas scattered everywhere" | `.claude/skills/` |
+### 1. Starting a session is one prompt — Claude figures out the rest
 
-**See [docs/architecture.md](docs/architecture.md) for the detailed architecture** (diagrams, Dual-Primary contract, five-stage flow, self-evolving mechanism).
+You don't keep a mental map of which files to load. You say **"please read `.claude/HANDOFF.md`"** and Claude walks the routing table: it asks you which project, loads that project's `CLAUDE.md`, reads the project `HANDOFF.md` for active threads, and confirms the stage you're on. The dispatcher covers six task modes (research / writing / literature learning / scheduling / code walkthrough / meta-review). See [`.claude/HANDOFF.md`](.claude/HANDOFF.md).
+
+### 2. `git clone` lands with a runnable skeleton and a working example
+
+You don't stare at an empty `projects/` wondering what goes where. [`projects/_example/`](projects/_example/) is a complete meta-project with filled-in Brainstorm and Survey documents so the shape of a "done" Stage 00 or Stage 01 is visible. Tell Claude "use `_example/` as the shape reference" and it bootstraps your project by example, not by hallucination.
+
+### 3. Research and writing live in separate layers — no more mixing them up
+
+When you write a paper, you do not want the prose, the live experiment decisions, and the rejected-hypothesis narrative on the same page. Research OS physically separates them:
+
+- **`projects/<name>/tracks/<track>/<thread>/`** — your live research process (five stages: brainstorm, survey, proposal, implement, experiment)
+- **`writing/<target>/`** — paper-ready material: chapter structure, figure directories, five-layer writing material per panel
+
+Once a thread's experiment stage lands, you copy curated figures and metadata into `writing/<target>/` at the right time, leaving the thread's `results/` directory as the experimental truth and the `writing/` version as the polished artefact. See [`writing/_index.md`](writing/_index.md).
+
+### 4. The archival problem is already solved
+
+A big share of post-project pain is "how do I put this on Feishu / Notion / Confluence now that it's done, in a way future-me can read?" Research OS ships a full external-platform mirror workflow at [`.claude/rules/feishu-mirror-workflow.md`](.claude/rules/feishu-mirror-workflow.md): document-type conventions, writing-material five-layer spec, citation three-step verification, plus a separate figure-style spec at [`figure-style-guidelines.md`](.claude/rules/figure-style-guidelines.md). Tell Claude "push this thread's results to Feishu" and the rules activate.
+
+### 5. Pre-installed skills activate exactly when you need them
+
+No `/plugin install` required. `git clone` gives you five skills that trigger on the right moments:
+
+| Skill | Source | Triggers on |
+|-------|--------|-------------|
+| [code-walkthrough](.claude/skills/own/code-walkthrough/) | **own** · MIT | Explaining a diff / PR review / cross-layer call tracing |
+| [karpathy-guidelines](.claude/skills/upstream/karpathy-guidelines/) | [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) · MIT | Writing / reviewing / refactoring any code — also baked into [CLAUDE.md §12](CLAUDE.md) as default behavior |
+| [superpowers-brainstorming](.claude/skills/upstream/superpowers-brainstorming/) | [obra/superpowers](https://github.com/obra/superpowers) · MIT | Any creative work before implementation — **including bootstrapping your first project** |
+| [superpowers-systematic-debugging](.claude/skills/upstream/superpowers-systematic-debugging/) | [obra/superpowers](https://github.com/obra/superpowers) · MIT | Any bug / test failure / unexpected behavior |
+| [superpowers-test-driven-development](.claude/skills/upstream/superpowers-test-driven-development/) | [obra/superpowers](https://github.com/obra/superpowers) · MIT | New feature / bugfix — tests first |
+
+Full index with attribution: [`.claude/skills/_catalog.md`](.claude/skills/_catalog.md). Every `upstream/` skill carries a `_UPSTREAM.md` with source URL, pinned commit, license, and author credit.
 
 ---
 
-## Quick Start
+## Quick start
+
+### Recommended path: let Claude bootstrap your first project
+
+The repo is a Claude Code template — the fastest way in is to let Claude read the template + shipped example and generate your project for you.
+
+**Step 1 — clone:**
 
 ```bash
-# 1. Clone
 git clone https://github.com/hauser-zhang/claude-research-os.git
 cd claude-research-os
-
-# 2. Start a project at L3 (inherits L2 skeleton automatically)
-mkdir -p projects/my-paper/{.claude,tracks}
-echo "# My Paper — Project Charter (L3)" > projects/my-paper/CLAUDE.md
-echo "# Session Handoff (L3)" > projects/my-paper/.claude/HANDOFF.md
-
-# 3. Tell Claude
-#    "Please start by reading projects/my-paper/.claude/HANDOFF.md"
 ```
 
-Full new-project guide: [`projects/README.md`](projects/README.md).
+**Step 2 — open Claude Code in this directory and paste this single prompt:**
 
----
+> Please read `.claude/HANDOFF.md`, `CLAUDE.md`, `projects/README.md`, and `projects/_example/` thoroughly. Then use the `superpowers-brainstorming` skill to help me create `projects/<my-project-slug>/` for my actual research project — explore the project goals, track partition, baseline, and remote environment before generating any files. Use `projects/_example/` as the shape reference.
 
-## What ships with this repo
+What happens next:
 
-Skills live under `.claude/skills/`, physically split so license and authorship are always visible. Full index in [`.claude/skills/_catalog.md`](.claude/skills/_catalog.md).
+1. `.claude/HANDOFF.md`'s routing table tells Claude this is a "new project bootstrap" task
+2. Claude reads `_example/` to learn what a real L3 project looks like
+3. The brainstorming skill auto-triggers because you mentioned it — Claude walks you through 5–10 questions about your research (question, tracks, baseline, remote env, active hypotheses)
+4. Claude generates `projects/<your-slug>/` with `CLAUDE.md`, `.claude/HANDOFF.md`, track `_index.md` files, and a first thread with Stage 00 already filled in from the brainstorming conversation
 
-| Skill | Source | Trigger |
-|-------|--------|---------|
-| [code-walkthrough](.claude/skills/own/code-walkthrough/) | **own** · MIT | Explaining diffs / PR review / cross-layer tracing |
-| [karpathy-guidelines](.claude/skills/upstream/karpathy-guidelines/) | **upstream** — [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) · MIT | Writing / reviewing / refactoring any code |
-| [superpowers-brainstorming](.claude/skills/upstream/superpowers-brainstorming/) | **upstream** — [obra/superpowers](https://github.com/obra/superpowers) · MIT | Any creative work before implementation |
-| [superpowers-systematic-debugging](.claude/skills/upstream/superpowers-systematic-debugging/) | **upstream** — [obra/superpowers](https://github.com/obra/superpowers) · MIT | Any bug / test failure / unexpected behavior |
-| [superpowers-test-driven-development](.claude/skills/upstream/superpowers-test-driven-development/) | **upstream** — [obra/superpowers](https://github.com/obra/superpowers) · MIT | New features / bugfixes, tests first |
+Total time: **15–30 minutes**, and the brainstorming conversation **is** the first thread's Stage 00 — zero wasted work.
 
-**Every `upstream/` skill ships a `_UPSTREAM.md` with source URL, pinned commit, license, and author attribution.** PRs mirroring new high-quality community skills are welcome — see [ADR-0004](decisions/ADR-0004-learning-sources-and-skills-split.md) for the contract.
+**Step 3 — day-to-day usage.** For every subsequent session, the pattern is the same:
+
+> Please read `.claude/HANDOFF.md` and continue.
+
+The HANDOFF dispatcher asks which project you're working on, loads the right L3 files, and drops you into the active thread's current stage.
+
+<details>
+<summary><b>Manual bootstrap</b> — offline, no AI assistance</summary>
+
+```bash
+# After git clone + cd:
+cp -r projects/_example projects/my-project
+cd projects/my-project
+rm HOW-TO-USE-THIS-EXAMPLE.md    # delete the example-only instructions
+# then hand-edit every file to replace example content with your own
+```
+
+Works offline, but slower — you re-derive every section yourself instead of letting Claude scope them to your project. Full new-project guide: [`projects/README.md`](projects/README.md).
+
+</details>
 
 ---
 
@@ -99,12 +141,25 @@ Skills live under `.claude/skills/`, physically split so license and authorship 
 | Scope | Where | Holds |
 |-------|-------|-------|
 | **L1 · Global** | `~/.claude/` | Python / git / testing conventions |
-| **L2 · Research OS** | this repo | Skeleton, cross-project wiki, skills, ADRs |
+| **L2 · Research OS** | this repo | Skeleton, cross-project wiki, skills, ADRs, archival rules |
 | **L3 · Per-project** | `projects/<name>/` | Project charter, tracks, active threads |
 
 Claude Code's cascading `CLAUDE.md` loader walks the directory tree and layers all three automatically. No glue code.
 
-**For the full diagram and the Dual-Primary / five-stage / self-evolving mechanics → [docs/architecture.md](docs/architecture.md).**
+For the full diagram and the Dual-Primary / five-stage / self-evolving mechanics → [docs/architecture.md](docs/architecture.md).
+
+---
+
+## The four core mechanisms
+
+| Mechanism | Addresses | Where it lives |
+|-----------|-----------|----------------|
+| **Three-scope cascade** — `L1 global / L2 framework / L3 project` `CLAUDE.md` layered load | "Copy-paste and hope" | Repo root + `projects/<name>/` |
+| **Dual-Primary knowledge** — timeless facts in `wiki/`, time-ordered process in `tracks/<t>/<thread>/`, bidirectional links | "Already summarised this" | `wiki/` (L2) + `projects/<name>/tracks/` (L3) |
+| **Five-stage flow + ADRs + frictions backlog** — every decision and rejected idea leaves a trail | "Didn't we already decide" | `decisions/` + `meta/` + thread `00..04.md` |
+| **Research ⇄ writing separation** — live process in `tracks/`, paper-ready material in `writing/<target>/` | Mixing experimental decisions with paper prose | `projects/<name>/tracks/` + `writing/` |
+
+See [docs/architecture.md](docs/architecture.md) for detailed diagrams and mechanics.
 
 ---
 
@@ -112,8 +167,9 @@ Claude Code's cascading `CLAUDE.md` loader walks the directory tree and layers a
 
 - **Decisions stop reappearing.** Week 3's Claude doesn't re-propose what Week 1 rejected — it's in an ADR.
 - **`wiki_touches:` grows.** A paper's wiki page shows 3, 5, 7 thread references. Knowledge compounding.
-- **New project bootstraps in <10 minutes.** Two boilerplate files and the L2 skeleton is inherited.
+- **New project bootstraps in <30 minutes.** AI-assisted brainstorm + an example to mirror = you skip the "where does what go" phase entirely.
 - **Frictions backlog empties weekly.** 2-minute real-time capture, batched in `/meta-review`.
+- **Results reach Feishu / Notion without you re-thinking the schema.** The archival rules cover document structure, figure style, and citation verification — you don't re-invent the process per project.
 - **Commits trace to one logical feature.** Sessions end with `git commit + push`.
 
 If the opposite happens — stale wiki, growing backlog, ADRs nobody reads — read [`docs/philosophy.md`](docs/philosophy.md) and reconsider which pieces you're actually using.
@@ -127,18 +183,18 @@ If the opposite happens — stale wiki, growing backlog, ADRs nobody reads — r
 | Full architecture (diagrams + mechanics) | [docs/architecture.md](docs/architecture.md) |
 | Philosophy (LLM bookkeeping / Dual-Primary / Five-stage / Self-Evolving) | [docs/philosophy.md](docs/philosophy.md) |
 | Annotated repo layout | [docs/repo-layout.md](docs/repo-layout.md) |
+| Reference project with filled-in phase docs | [projects/_example/](projects/_example/) |
 | Three-scope ADR | [decisions/ADR-0001](decisions/ADR-0001-research-os-architecture.md) |
 | Tracks + IDEAS inbox ADR | [decisions/ADR-0002](decisions/ADR-0002-tracks-and-ideas-inbox.md) |
 | Open-source L2/L3 split ADR | [decisions/ADR-0003](decisions/ADR-0003-open-source-split.md) |
 | Learning-sources + skill own/upstream ADR | [decisions/ADR-0004](decisions/ADR-0004-learning-sources-and-skills-split.md) |
-| Skill spec (Anthropic 3-layer) | [CLAUDE.md §5](CLAUDE.md) |
+| External-platform archival workflow (Feishu / Notion) | [.claude/rules/feishu-mirror-workflow.md](.claude/rules/feishu-mirror-workflow.md) |
+| Figure style (publication-quality) | [.claude/rules/figure-style-guidelines.md](.claude/rules/figure-style-guidelines.md) |
 | Citation three-step verification | [.claude/rules/research-and-reporting.md](.claude/rules/research-and-reporting.md) |
 
 ---
 
 ## Inspired by
-
-Research OS stands on the shoulders of these projects. Each one is reused here in a concrete, verifiable way — not as a slogan.
 
 ### [![](https://img.shields.io/github/stars/forrestchang/andrej-karpathy-skills?style=social&label=Star)](https://github.com/forrestchang/andrej-karpathy-skills) &nbsp; [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) · MIT
 
@@ -166,10 +222,6 @@ The three-layer skill spec (trigger description → SKILL.md narrative → `refe
 
 ---
 
-Everything else — three-scope cascade, Dual-Primary, five-stage flow, self-evolving frictions, own/upstream skill split — is this repo's own design.
-
----
-
 ## Not suited for
 
 - **One-off projects that finish in a week.** No cross-session accumulation — plain Cursor / Copilot is enough.
@@ -181,7 +233,7 @@ Everything else — three-scope cascade, Dual-Primary, five-stage flow, self-evo
 
 ## Status & contributing
 
-**v1.2** · dogfooding since 2026-04 on the maintainer's own multi-month project.
+**v1.4** · dogfooding since 2026-04 on the maintainer's own multi-month project.
 
 - Issues for architectural ambiguity / missing examples / concrete pain points.
 - PRs for skeleton improvements (open an issue first — template changes affect every fork).

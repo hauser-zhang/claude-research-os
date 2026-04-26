@@ -6,9 +6,25 @@
 
 ## Mounted projects
 
-The open-source template ships without any built-in project sample. First-time users: follow the "new-project guide" below.
+| Name | Type | Tracked in git? |
+|------|------|-----------------|
+| [`_example/`](_example/) | **Reference project** (meta — research about Research OS itself) | ✅ Yes — shipped for every user |
 
-> The maintainer has a private first-class project mounted here, but `.gitignore` excludes the entire directory from the open-source repo. Once project count reaches ≥2 or users request a sample, `_example/` will ship an anonymised skeleton demo.
+The open-source template ships with `_example/` as a read-only reference you can point Claude at when bootstrapping your own project. Do not build on top of `_example/`; copy from it into your own `projects/<your-name>/`. See [`_example/HOW-TO-USE-THIS-EXAMPLE.md`](_example/HOW-TO-USE-THIS-EXAMPLE.md).
+
+The maintainer also mounts a private first-class project here; that directory is gitignored and never reaches the open-source repo.
+
+---
+
+## AI-assisted bootstrap (recommended)
+
+After `git clone`, open Claude Code in the repo root and paste:
+
+> Please read `.claude/HANDOFF.md`, `CLAUDE.md`, this `projects/README.md`, and `projects/_example/` thoroughly. Then use the `superpowers-brainstorming` skill to help me create `projects/<my-project-slug>/` for my actual research project — explore the project goals, track partition, baseline, and remote environment before generating any files. Use `projects/_example/` as the shape reference.
+
+Claude will run through brainstorming with you (research question → tracks → baseline → remote environment), then generate the skeleton under `projects/<my-project-slug>/` by cross-referencing `_example/` for shape and the conventions below for naming / frontmatter / structure.
+
+The manual path is documented below for offline use.
 
 ---
 

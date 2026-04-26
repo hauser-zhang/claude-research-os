@@ -109,3 +109,6 @@ _feishu_raw/
 # Session handoff prompts (ephemeral, not part of the template)
 _*session-prompt*.md
 _next-session-*.md
+
+# Maintainer's private VSCode Front Matter extension config
+frontmatter.json
