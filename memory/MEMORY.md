@@ -39,3 +39,4 @@
 - [Opus Token Guard](feedback_opus_token_guard.md) — Opus 下大规模外部平台写入先报清单，禁止自主 overwrite
 - [MSYS Path Conversion](feedback_msys_pathconv.md) — Windows Git Bash 调外部 API 需 MSYS_NO_PATHCONV=1
 - [SSH File Patching](feedback_ssh_file_patching.md) — heredoc 内 Python 单引号炸 EOF，用 cp+patch
+- [Web Tool Fallback to CLI](feedback_web_tool_fallback_to_cli.md) — WebFetch/WebSearch 被拒时用 `gh`/`npm`/`pip`/MCP 等已认证 CLI 走官方 API

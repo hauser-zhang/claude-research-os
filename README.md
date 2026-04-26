@@ -24,7 +24,7 @@ An open-source Claude Code template that turns multi-project research into a lay
 2. This repo arranges them into **L1 global / L2 framework / L3 per-project** scopes, plus a wiki ⇄ threads knowledge split and a five-stage flow.
 3. `git clone` + paste one prompt → Claude bootstraps your first project in ~15 min.
 
-> Works for solo researchers running 2+ projects. Not a team/collab tool.
+> A personal research OS for the individual PhD / researcher — compound your knowledge, decisions, and lessons across years.
 
 ---
 
@@ -269,11 +269,26 @@ The three-layer skill spec (trigger description → SKILL.md narrative → `refe
 
 ---
 
+## Why not a fully-autonomous AI scientist?
+
+**Short answer: use both.** Let the agent run a bounded sub-task; keep the human on the outer loop. Research OS is built for that outer loop.
+
+Projects like [SakanaAI/AI-Scientist](https://github.com/SakanaAI/AI-Scientist) (13.4k ★ — *"Towards Fully Automated Open-Ended Scientific Discovery"*), [stanford-oval/storm](https://github.com/stanford-oval/storm) (28.1k ★ — *"LLM-powered knowledge curation that researches a topic and generates a full-length report with citations"*), and [Future-House/paper-qa](https://github.com/Future-House/paper-qa) (8.4k ★ — *"High-accuracy RAG for questions from scientific documents with citations"*) excel at **closed, well-scoped tasks**: write a focused survey, query a paper corpus end-to-end, run a synthetic ML benchmark from hypothesis to plot. When a sub-problem fits inside one of those tasks, delegate it.
+
+Research OS covers what a PhD career spans across years, which the autonomous loops don't try to cover:
+
+- **Wet-lab / instrument / field work** — biology, chemistry, physics, astronomy. The experimental middle is irreducibly human; autonomous systems can accelerate the bookends (literature, figures, drafts), but cannot close the loop alone.
+- **Cross-project knowledge that compounds** — three years of decisions, rejected hypotheses, validated techniques. Optimizing a single paper is a different problem than optimizing *you*.
+- **Verifiable mid-steps** — autonomous pipelines can silently fail at step N; Research OS keeps citation three-step verification and real-time friction capture as explicit rules, so every mid-step leaves a checkable trail.
+
+**Same workflow, different layers.** Plug an autonomous agent in as a sub-task runner under a Research OS thread when you have a bounded sub-problem (e.g. *"survey papers on topic X"*, *"run benchmarks Y"*). The thread keeps the history and the decisions; the agent does the grunt work.
+
+---
+
 ## Not suited for
 
 - **One-off projects that finish in a week.** No cross-session accumulation — plain Cursor / Copilot is enough.
 - **Pure application engineering.** Research OS is for hypothesis → validation → interpretation; wiki + threads are overkill for feature dev.
-- **Team-first collaboration.** This is **solo + Claude**. External mirrors (Feishu / Notion) are views, not sources of truth.
 - **Structured data pipelines.** Snakemake / Airflow have their own philosophies; Research OS is the meta-layer of research *process*.
 
 ---
