@@ -1,0 +1,166 @@
+{
+  "$schema": "https://frontmatter.codes/frontmatter.schema.json",
+  "frontMatter.framework.id": "other",
+  "frontMatter.content.pageFolders": [
+    {
+      "title": "Wiki Papers",
+      "path": "[[workspace]]/wiki/papers",
+      "contentTypes": ["wiki-paper"]
+    },
+    {
+      "title": "Wiki Concepts",
+      "path": "[[workspace]]/wiki/concepts",
+      "contentTypes": ["wiki-concept"]
+    },
+    {
+      "title": "Wiki Datasets",
+      "path": "[[workspace]]/wiki/datasets",
+      "contentTypes": ["wiki-dataset"]
+    },
+    {
+      "title": "Wiki Benchmarks",
+      "path": "[[workspace]]/wiki/benchmarks",
+      "contentTypes": ["wiki-benchmark"]
+    },
+    {
+      "title": "Wiki Syntheses",
+      "path": "[[workspace]]/wiki/syntheses",
+      "contentTypes": ["wiki-synthesis"]
+    },
+    {
+      "title": "Decisions (ADR)",
+      "path": "[[workspace]]/decisions"
+    },
+    {
+      "title": "Journal",
+      "path": "[[workspace]]/journal"
+    }
+  ],
+  "frontMatter.taxonomy.contentTypes": [
+    {
+      "name": "wiki-paper",
+      "pageBundle": false,
+      "previewPath": null,
+      "fields": [
+        { "name": "wiki_id", "title": "Wiki ID (slug)", "type": "string", "required": true },
+        { "name": "title", "title": "Title", "type": "string", "required": true },
+        { "name": "type", "title": "Type", "type": "choice", "default": "paper", "choices": ["paper"] },
+        {
+          "name": "status",
+          "title": "Status",
+          "type": "choice",
+          "choices": ["stub", "draft", "mature", "stale"],
+          "default": "stub"
+        },
+        { "name": "sources", "title": "Sources (local PDFs etc.)", "type": "list" },
+        { "name": "authors", "title": "Authors", "type": "list" },
+        { "name": "year", "title": "Year", "type": "number" },
+        { "name": "venue", "title": "Venue", "type": "string" },
+        { "name": "doi", "title": "DOI", "type": "string" },
+        { "name": "aliases", "title": "Aliases", "type": "list" },
+        { "name": "tags", "title": "Tags", "type": "tags" },
+        { "name": "touched_by", "title": "Touched by (threads)", "type": "list" },
+        { "name": "created", "title": "Created", "type": "datetime", "default": "{{now}}" },
+        { "name": "updated", "title": "Updated", "type": "datetime", "default": "{{now}}" }
+      ]
+    },
+    {
+      "name": "wiki-concept",
+      "pageBundle": false,
+      "previewPath": null,
+      "fields": [
+        { "name": "wiki_id", "title": "Wiki ID (slug)", "type": "string", "required": true },
+        { "name": "title", "title": "Title", "type": "string", "required": true },
+        { "name": "type", "title": "Type", "type": "choice", "default": "concept", "choices": ["concept"] },
+        {
+          "name": "status",
+          "title": "Status",
+          "type": "choice",
+          "choices": ["stub", "draft", "mature", "stale"],
+          "default": "stub"
+        },
+        { "name": "sources", "title": "Sources", "type": "list" },
+        { "name": "aliases", "title": "Aliases", "type": "list" },
+        { "name": "tags", "title": "Tags", "type": "tags" },
+        { "name": "touched_by", "title": "Touched by (threads)", "type": "list" },
+        { "name": "created", "title": "Created", "type": "datetime", "default": "{{now}}" },
+        { "name": "updated", "title": "Updated", "type": "datetime", "default": "{{now}}" }
+      ]
+    },
+    {
+      "name": "wiki-dataset",
+      "pageBundle": false,
+      "previewPath": null,
+      "fields": [
+        { "name": "wiki_id", "title": "Wiki ID (slug)", "type": "string", "required": true },
+        { "name": "title", "title": "Title", "type": "string", "required": true },
+        { "name": "type", "title": "Type", "type": "choice", "default": "dataset", "choices": ["dataset"] },
+        {
+          "name": "status",
+          "title": "Status",
+          "type": "choice",
+          "choices": ["stub", "draft", "mature", "stale"],
+          "default": "stub"
+        },
+        { "name": "url", "title": "Official URL", "type": "string" },
+        { "name": "license", "title": "License", "type": "string" },
+        { "name": "version", "title": "Current version", "type": "string" },
+        { "name": "aliases", "title": "Aliases", "type": "list" },
+        { "name": "tags", "title": "Tags", "type": "tags" },
+        { "name": "touched_by", "title": "Touched by (threads)", "type": "list" },
+        { "name": "created", "title": "Created", "type": "datetime", "default": "{{now}}" },
+        { "name": "updated", "title": "Updated", "type": "datetime", "default": "{{now}}" }
+      ]
+    },
+    {
+      "name": "wiki-benchmark",
+      "pageBundle": false,
+      "previewPath": null,
+      "fields": [
+        { "name": "wiki_id", "title": "Wiki ID (slug)", "type": "string", "required": true },
+        { "name": "title", "title": "Title", "type": "string", "required": true },
+        { "name": "type", "title": "Type", "type": "choice", "default": "benchmark", "choices": ["benchmark"] },
+        {
+          "name": "status",
+          "title": "Status",
+          "type": "choice",
+          "choices": ["stub", "draft", "mature", "stale"],
+          "default": "stub"
+        },
+        { "name": "sources", "title": "Sources", "type": "list" },
+        { "name": "url", "title": "Official URL", "type": "string" },
+        { "name": "primary_metric", "title": "Primary metric", "type": "string" },
+        { "name": "aliases", "title": "Aliases", "type": "list" },
+        { "name": "tags", "title": "Tags", "type": "tags" },
+        { "name": "touched_by", "title": "Touched by (threads)", "type": "list" },
+        { "name": "created", "title": "Created", "type": "datetime", "default": "{{now}}" },
+        { "name": "updated", "title": "Updated", "type": "datetime", "default": "{{now}}" }
+      ]
+    },
+    {
+      "name": "wiki-synthesis",
+      "pageBundle": false,
+      "previewPath": null,
+      "fields": [
+        { "name": "wiki_id", "title": "Wiki ID (slug)", "type": "string", "required": true },
+        { "name": "title", "title": "Title", "type": "string", "required": true },
+        { "name": "type", "title": "Type", "type": "choice", "default": "synthesis", "choices": ["synthesis"] },
+        {
+          "name": "status",
+          "title": "Status",
+          "type": "choice",
+          "choices": ["stub", "draft", "mature", "stale"],
+          "default": "stub"
+        },
+        { "name": "tags", "title": "Tags", "type": "tags" },
+        { "name": "touched_by", "title": "Touched by (threads)", "type": "list" },
+        { "name": "created", "title": "Created", "type": "datetime", "default": "{{now}}" },
+        { "name": "updated", "title": "Updated", "type": "datetime", "default": "{{now}}" }
+      ]
+    }
+  ],
+  "frontMatter.preview.host": "",
+  "frontMatter.git.enabled": false,
+  "frontMatter.dashboard.openOnStart": false,
+  "frontMatter.telemetry.disable": true
+}

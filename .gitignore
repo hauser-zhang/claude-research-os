@@ -1,0 +1,111 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local settings
+.claude/settings.local.json
+
+# ──────────────────────────────────────────────────────────────────────────
+# Private projects (not part of the open-source template)
+# See ADR-0003: only the framework skeleton + projects/README.md is tracked;
+# each maintainer's actual projects live under projects/<name>/ and are
+# gitignored by default.
+# ──────────────────────────────────────────────────────────────────────────
+projects/VFormer/
+
+# Project data (never commit raw datasets or experiment outputs)
+projects/*/data/
+projects/*/results/
+projects/*/runs/
+projects/*/checkpoints/
+projects/*/_cache/
+
+# ──────────────────────────────────────────────────────────────────────────
+# Private wiki content — only skeleton (index.md template + _README.md
+# per-folder + .gitkeep) is tracked. Actual wiki pages are the author's
+# private knowledge base; open-source consumers fill their own.
+# ──────────────────────────────────────────────────────────────────────────
+wiki/papers/*.md
+wiki/concepts/*.md
+wiki/datasets/*.md
+wiki/benchmarks/*.md
+wiki/syntheses/*.md
+!wiki/*/_README.md
+!wiki/index.md
+!wiki/log.md
+
+# ──────────────────────────────────────────────────────────────────────────
+# Private journal + runtime meta (private lab-notebook / operations log).
+# Only the skeleton _index.md / backlog templates are tracked.
+# ──────────────────────────────────────────────────────────────────────────
+journal/**
+!journal/_index.md
+!journal/.gitkeep
+meta/frictions-backlog.md
+meta/improvements-backlog.md
+meta/reviews/**
+!meta/reviews/.gitkeep
+
+# ──────────────────────────────────────────────────────────────────────────
+# Private writing material (papers/theses are the author's private work
+# product). Only the top-level writing/_index.md scaffold is tracked.
+# ──────────────────────────────────────────────────────────────────────────
+writing/*/
+!writing/_index.md
+
+# ──────────────────────────────────────────────────────────────────────────
+# Private memory
+# - user_*.md: per-user profile (always private).
+# - feedback_*.md: cross-project collaboration rules. Tracked only after
+#   desensitization. If you fork and add your own, prefix with `private_`
+#   or add here to exclude.
+# ──────────────────────────────────────────────────────────────────────────
+memory/user_*.md
+memory/private_*.md
+
+# Large binary artifacts
+raw/papers/*.pdf
+raw/clippings/*.html
+*.pkl
+*.pth
+*.ckpt
+*.bin
+
+# But keep manifest + README stubs
+!raw/manifest.json
+!raw/papers/.gitkeep
+!raw/clippings/.gitkeep
+
+# Temp
+*.tmp
+*.bak
+*.bak_*
+
+# Feishu raw dumps (migration-only, not authoritative)
+_feishu_raw/
+
+# Session handoff prompts (ephemeral, not part of the template)
+_*session-prompt*.md
+_next-session-*.md
