@@ -18,6 +18,7 @@
 - [Documentation Standards](feedback_documentation.md) — 绝对路径、Visual-first、Brainstorm 存决策非对话流水
 - [Writing Material Structure](feedback_writing_material.md) — 每 Panel 五层结构 + Analysis metadata + panel-level audit
 - [README Requirement](feedback_readme_requirement.md) — 代码目录必须同时有 README.md（人读）+ CLAUDE.md（Claude 读）
+- [Bilingual README Rewrite](feedback_bilingual_readme_rewrite.md) — 双语 README：中文版按中文直觉独立重写，不直译；6 个翻译腔信号自检
 
 ## Feedback — 代码风格与实验纪律
 - [Code Style](feedback_code_style.md) — 保留原文件、讨论优先、.sh 脚本、不覆盖结果
