@@ -43,7 +43,7 @@ projects/*/checkpoints/
 projects/*/_cache/
 
 # ──────────────────────────────────────────────────────────────────────────
-# Private wiki content — only skeleton (index.md template + _README.md
+# Private wiki content — only skeleton (*.template.md + _README.md
 # per-folder + .gitkeep) is tracked. Actual wiki pages are the author's
 # private knowledge base; open-source consumers fill their own.
 # ──────────────────────────────────────────────────────────────────────────
@@ -53,27 +53,49 @@ wiki/datasets/*.md
 wiki/benchmarks/*.md
 wiki/syntheses/*.md
 !wiki/*/_README.md
-!wiki/index.md
-!wiki/log.md
+# Local user-derived files (cp from *.template.md on first use) — ignored
+wiki/index.md
+wiki/log.md
+# But always track the templates
+!wiki/index.template.md
+!wiki/log.template.md
 
 # ──────────────────────────────────────────────────────────────────────────
 # Private journal + runtime meta (private lab-notebook / operations log).
-# Only the skeleton _index.md / backlog templates are tracked.
+# Only the skeleton _index.template.md / backlog templates are tracked.
 # ──────────────────────────────────────────────────────────────────────────
 journal/**
-!journal/_index.md
+!journal/_index.template.md
 !journal/.gitkeep
 meta/frictions-backlog.md
 meta/improvements-backlog.md
 meta/reviews/**
 !meta/reviews/.gitkeep
+!meta/reviews/_template.md
 
 # ──────────────────────────────────────────────────────────────────────────
 # Private writing material (papers/theses are the author's private work
-# product). Only the top-level writing/_index.md scaffold is tracked.
+# product). Only the top-level writing/_index.template.md scaffold is tracked.
 # ──────────────────────────────────────────────────────────────────────────
 writing/*/
-!writing/_index.md
+writing/_index.md
+!writing/_index.template.md
+
+# ──────────────────────────────────────────────────────────────────────────
+# Private learning notes (non-task-driven reading). Only the
+# learning/_index.template.md scaffold is tracked.
+# ──────────────────────────────────────────────────────────────────────────
+learning/*
+!learning/_index.template.md
+!learning/.gitkeep
+
+# ──────────────────────────────────────────────────────────────────────────
+# Private schedule / ToDo (author's personal calendar). Only the
+# schedule/_index.template.md scaffold is tracked.
+# ──────────────────────────────────────────────────────────────────────────
+schedule/*
+!schedule/_index.template.md
+!schedule/.gitkeep
 
 # ──────────────────────────────────────────────────────────────────────────
 # Private memory
@@ -93,8 +115,9 @@ raw/clippings/*.html
 *.ckpt
 *.bin
 
-# But keep manifest + README stubs
-!raw/manifest.json
+# But keep manifest template + README stubs
+raw/manifest.json
+!raw/manifest.template.json
 !raw/papers/.gitkeep
 !raw/clippings/.gitkeep
 

@@ -347,3 +347,30 @@ research-os/
 
 ---
 
+## 13. 首次使用：从 `.template` 文件派生本地工作文件
+
+本仓库既是开源模板又是维护者工作空间。以下 7 条路径**只在 git 里保留 `.template` 版本**，用户首次使用时各自 `cp` 派生本地文件（已 `.gitignore`，框架更新不覆盖、用户填充不污染上游）。
+
+| Template（tracked） | Local（派生，不入 git） |
+|---|---|
+| `wiki/index.template.md` | `wiki/index.md` |
+| `wiki/log.template.md` | `wiki/log.md` |
+| `writing/_index.template.md` | `writing/_index.md` |
+| `learning/_index.template.md` | `learning/_index.md` |
+| `schedule/_index.template.md` | `schedule/_index.md` |
+| `journal/_index.template.md` | `journal/_index.md` |
+| `raw/manifest.template.json` | `raw/manifest.json` |
+
+### Bootstrap 检查（HANDOFF §0 首动作）
+
+Claude 读完 `.claude/HANDOFF.md` 看到 §0 后立即扫描上表：缺 local 就询问用户是否 `cp`；两者都存在则不动（用户自己 diff 同步）。
+
+一次性 bootstrap 命令：
+
+```bash
+for pair in wiki/index wiki/log writing/_index learning/_index schedule/_index journal/_index; do
+  [ -f "$pair.template.md" ] && [ ! -f "$pair.md" ] && cp "$pair.template.md" "$pair.md" && echo "created: $pair.md"
+done
+[ -f raw/manifest.template.json ] && [ ! -f raw/manifest.json ] && cp raw/manifest.template.json raw/manifest.json
+```
+

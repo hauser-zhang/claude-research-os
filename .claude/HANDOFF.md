@@ -9,6 +9,7 @@
 
 ## 0. 启动顺序
 
+0. **Template bootstrap 检查**（见 `CLAUDE.md §13`）：扫描 7 对 `template` / `local` 文件（`wiki/index` · `wiki/log` · `writing/_index` · `learning/_index` · `schedule/_index` · `journal/_index` · `raw/manifest`）。对只有 `.template` 缺本地文件的，询问用户是否 `cp` 初始化。首次 clone 仓库的用户会在这一步把框架骨架变成自己的工作空间。
 1. 本文件（任务分流 + 规则/skill 索引）
 2. 仓库根 `CLAUDE.md`（L2 骨架，三层作用域、五阶段流程、sub-agent 规则）
 3. 如果任务绑定某个项目 → `cd projects/<name>/`
