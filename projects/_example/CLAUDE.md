@@ -47,7 +47,7 @@ required_env:  WANDB_API_KEY, HF_TOKEN
 No external mirror for this example. For a real project, this section typically lists:
 
 - Main Feishu / Notion doc ID and URL
-- Tag convention for mirror push (see [`.claude/rules/feishu-mirror-workflow.md`](../../.claude/rules/feishu-mirror-workflow.md))
+- Tag convention for mirror push (see [`.claude/rules/writing-and-archival.md`](../../.claude/rules/writing-and-archival.md); platform-specific setup in [`platforms/feishu.md`](../../.claude/rules/platforms/feishu.md) / [`platforms/notion.md`](../../.claude/rules/platforms/notion.md))
 
 ---
 

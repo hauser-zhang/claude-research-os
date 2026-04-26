@@ -6,7 +6,7 @@ type: feedback
 
 **问题**：某次 session 中，创建了 Writing Material 和更新了 Experimental Results，但遗漏了更新父页面和主文档更新日志，用户发现后指出。
 
-**规则**（完整版写入 `.claude/rules/feishu-mirror-workflow.md §11`）：
+**规则**（完整版写入 `.claude/rules/writing-and-archival.md §11`）：
 
 1. **子页面变更 → 必须向上传播**：
    - 更新直接父页面（状态表、子页面索引、摘要数字）

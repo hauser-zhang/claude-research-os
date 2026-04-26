@@ -1,23 +1,24 @@
-# 飞书镜像工作流规范（L2 · 跨项目通用）
+# 写作与存档规范（L2 · 跨项目通用 · 平台无关）
 
-> **定位**：本地 md 是**权威源**，飞书是**镜像视图**（分享给导师、合作者）。本规则定义镜像的结构、同步时机、内容组织原则。
+> **定位**：本地 md 是**权威源**，外部协作平台（飞书 / Notion / Confluence / ...）是**镜像视图**（分享给导师、合作者）。本规则定义镜像的结构、同步时机、内容组织原则，不绑定具体平台。
 > **适用**：所有科研项目。
-> **项目专属的文档树结构**（tag 规范、父子关系）：见 `projects/<name>/.claude/rules/feishu-doc-structure.md`。
+> **平台专属接入**（MCP/CLI/API、markdown 坑点、上传流程）：见 `platforms/feishu.md`、`platforms/notion.md`。
+> **项目专属的文档树结构**（tag 规范、父子关系）：见 `projects/<name>/.claude/rules/<platform>-doc-structure.md`（如 `feishu-doc-structure.md`）。
 
 ---
 
 ## 1. 核心原则
 
 - **本地 md 是源**：每个 thread 的五阶段文档、writing 素材、ADR 只在本地产出
-- **飞书是镜像**：从本地 md 按需 push 到飞书，共享给导师 / 合作者
-- **单向推送**：飞书 UI 上的修改不驱动本地；若用户在飞书手改了，Claude 在下次 pull 时会指出 diff 并询问如何 merge
-- **触发即推送**：用户显式说"更新到飞书"/"推到飞书"时 Claude 才 push，不自动同步
+- **外部平台是镜像**：从本地 md 按需 push 到平台，共享给导师 / 合作者
+- **单向推送**：平台 UI 上的修改不驱动本地；若用户在平台手改了，Claude 在下次 pull 时会指出 diff 并询问如何 merge
+- **触发即推送**：用户显式说"更新到 <平台>"/"推到 <平台>"时 Claude 才 push，不自动同步
 
 ---
 
-## 2. 本地 → 飞书的映射
+## 2. 本地 → 镜像页面的映射
 
-| 本地路径 | 飞书页面类型 | 同步方式 |
+| 本地路径 | 镜像页面类型（Tag） | 同步方式 |
 |---------|-------------|---------|
 | `tracks/<track>/<thread>/00-brainstorm.md` | `[Brainstorm]` 子页 | 结构化精简（讨论演进表 + 决策表）|
 | `tracks/<track>/<thread>/01-survey.md` | `[Survey]` 子页 | 文献 + 对比表精简推送 |
@@ -27,7 +28,9 @@
 | `writing/<target>/<chapter>/<section>.md` | `[Writing Material]` 子页 | 五层内容 + Analysis metadata |
 | `projects/<name>/README.md` | 项目主文档（索引 + 更新日志） | 追加一行更新日志 |
 
-**具体飞书父子结构**（哪些子页归属哪个模块）见 L3 rule `feishu-doc-structure.md`。
+Tag 体系（`[Brainstorm]` / `[Survey]` / `[Ideas]` / `[Implementation]` / `[Experimental Results]` / `[Writing Material]` / `[Report]`）为**跨平台统一约定**。不同平台可能把"页面"具象为不同对象（飞书文档子页、Notion database page），但 Tag 一致。
+
+**具体父子结构**（哪些子页归属哪个模块）见对应 L3 rule：`projects/<name>/.claude/rules/<platform>-doc-structure.md`。
 
 ---
 
@@ -93,7 +96,7 @@ prerequisite docs:
 
 | 文档类型 | 概览区形式 |
 |---------|-----------|
-| Brainstorm | 思维导图（飞书画板，必须） |
+| Brainstorm | 思维导图（平台画板 / whiteboard，必须） |
 | Survey | 对比表格（方法 / 论文横向对比，必须） |
 | Ideas / Proposal | 实施路线总览表（Phase × 工作量 × 收益） |
 | Implementation | Changelog 摘要表（必须）+ 数据流图 / 目录结构 |
@@ -240,7 +243,7 @@ prerequisite docs:
 
 ### 规则 1：子页面变更 → 向上传播
 
-**触发**：创建 / 实质性更新任何飞书子页。
+**触发**：创建 / 实质性更新任何镜像子页。
 
 **必须执行**（按顺序）：
 
@@ -255,11 +258,11 @@ prerequisite docs:
 
 ### 规则 2：规范变更 → 回查已有文档
 
-**触发**：本 rule（或 L3 `feishu-doc-structure.md`）被修改。
+**触发**：本 rule（或 L3 `<platform>-doc-structure.md`）被修改。
 
 **必须执行**：
 
-1. 列出受影响的已有飞书文档（不符合新规范的地方）
+1. 列出受影响的已有镜像文档（不符合新规范的地方）
 2. 向用户汇报哪些文档需要重构
 3. 经用户确认后逐个修改
 
@@ -267,9 +270,7 @@ prerequisite docs:
 
 ---
 
-## 12. 图片插入规范
-
-**背景**：`lark-cli docs +media-insert` API 只能将图片追加到文档末尾，无法精确插入段落中间。
+## 12. 图片插入规范（通用部分）
 
 **统一规范**：
 
@@ -279,44 +280,11 @@ prerequisite docs:
 
 **例外**：单图文档 / Case study 级单 figure 可图在正文，但多 panel 文档一律图在末尾。
 
----
-
-## 13. lark-cli markdown 已知坑点
-
-### 13.1 英文双引号截断（严重）
-
-`"xxx"` 中的双引号会导致飞书解析器截断其后内容。
-
-**解决**：
-- 去外层双引号：`原文支持句：These pathogens...`
-- 或改中文引号：`原文支持句：「These pathogens...」`
-- 绝不在 `--markdown` 参数中用英文双引号包长段落
-
-### 13.2 Blockquote `>` 多行截断
-
-`>` 引用块换行后内容不渲染，只保留第一行。
-
-**解决**：改普通段落 + `**📌 文献留痕：**` 加粗标题。
-
-### 13.3 `replace_range` 定位串含双引号 → 参数报错
-
-**解决**：选不含双引号的锚点文字。
-
-### 13.4 `lark-table` 内 `replace_range` 无法跨 cell 分割
-
-单元格内 markdown 的 `|` 被当 literal 文本，**不会**拆成两个 cell。
-**解决**：多 cell 修改 → 对每 cell 独立替换。
-
-### 13.5 通用检查
-
-写入前检查 `--markdown` 内容：
-- 英文双引号 → 改中文引号或去掉
-- 多行 `>` blockquote → 改普通段落
-- 特殊 shell 字符 → heredoc 中正确转义
+**平台专属**：具体上传 API / MCP 调用方式、是否支持精确插入位置，见 `platforms/feishu.md` 和 `platforms/notion.md`。"图在末尾"的铁律有部分是被飞书 API 限制（`+media-insert` 只能追加）逼出来的；为保持跨平台一致性，Notion 等支持精确插入的平台也沿用此约定。
 
 ---
 
-## 14. 路径规范（飞书文档中引用服务器文件）
+## 13. 路径规范（镜像文档中引用服务器文件）
 
 **必须**使用服务器名 + 绝对路径：
 
@@ -325,7 +293,7 @@ prerequisite docs:
 
 ---
 
-## 15. 生物学解读规范
+## 14. 生物学解读规范
 
 涉及生物学解读时**每个结论至少 1 篇文献**：
 
@@ -336,21 +304,21 @@ prerequisite docs:
 
 ---
 
-## 16. 命名规范
+## 15. 命名规范
 
 - 标题格式：`[Tag] 简短描述`
 - Tag 统一英文：`Brainstorm / Survey / Ideas / Implementation / Experimental Results / Writing Material / Report`
 - **已确认方向的父页面**（探索型模块）：直接用方向内容命名，**不加 Tag 前缀**
   - 例：`边特征丰富化`（不是 `[Direction] 边特征丰富化`）
-- **不加日期前缀**（飞书本身记录创建时间）
+- **不加日期前缀**（平台本身记录创建时间）
 - 描述说明**分析内容**而非图号：✅ `可解释性分析 — 网络 A / 网络 B 利用` / ❌ `Figure 5 故事逻辑`（图号会变）
 - 每个文档开头标注**前置文档**链接
 
 ---
 
-## 17. Opus token 保护（高级模型下的飞书操作）
+## 16. Opus token 保护（高级模型下的镜像写入）
 
-使用 **Opus 等高级模型** 时，飞书大规模写入（overwrite、大段 append、批量插图）消耗巨大 tokens（本地 md 编辑不受限）。
+使用 **Opus 等高级模型** 时，镜像平台大规模写入（overwrite、大段 append、批量插图）消耗巨大 tokens（本地 md 编辑不受限）。
 
 **必须**：
 
@@ -359,6 +327,6 @@ prerequisite docs:
 3. **建议**：提示切换 Sonnet 后再写入
 4. **例外**：单行替换（修路径、改错别字）、本地 md 编辑、SSH 操作不受限
 
-**禁止自主 overwrite 整篇飞书文档**，除非用户明确说"全部重写"。overwrite 清空所有图片 token / 评论 / 格式，重建成本是 replace_range 的 10x。
+**禁止自主 overwrite 整篇镜像文档**，除非用户明确说"全部重写"。overwrite 清空所有图片 token / 评论 / 格式，重建成本是精确 range 替换的 10x。
 
-遇文档结构混乱 → 先 fetch，分析混乱位置，用 replace_range 精确修复。
+遇文档结构混乱 → 先 fetch，分析混乱位置，用平台的精确替换能力修复（飞书 `replace_range` / Notion `patch_block_children`，见 platforms/ 对应文件）。

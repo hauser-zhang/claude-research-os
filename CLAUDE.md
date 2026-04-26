@@ -121,6 +121,17 @@ Real-time capture → Session-end auto-grep → Weekly meta-review
 
 **Friction** = 系统中任何不够用的地方（规则空白 / 模板缺章节 / 命令缺失 / Claude 误解）。捕获成本低，决策批量做，不打断研究 flow。
 
+### HANDOFF 老化自动检查（2026-04-26 起）
+
+项目级 `.claude/settings.json` 注册了两个 hook，防止"session 结束忘更新 HANDOFF"：
+
+| Hook | Event | 行为 |
+|------|-------|------|
+| `handoff-staleness-check.py` | `SessionStart` | 扫 `projects/*/.claude/HANDOFF.md`，若 tracks/ 下有 md 比 HANDOFF 新 或 HANDOFF > 72h 未更新 → inject `additionalContext` 提醒 Claude 本 session 注意同步 |
+| `handoff-stop-reminder.py` | `Stop` | session 结束时同样两启发检查 → inject `systemMessage` 显示到用户 UI |
+
+脚本在 `.claude/hooks/` 下。healthy 状态静默，有 issue 才输出——不是噪声型提醒。
+
 ---
 
 ## 5. Skill 规范（Anthropic 官方三层）
