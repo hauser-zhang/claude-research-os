@@ -227,7 +227,9 @@ research-os/
 |------|------|
 | 文献调研与汇报规范 | [.claude/rules/research-and-reporting.md](.claude/rules/research-and-reporting.md) |
 | 学术图表风格 | [.claude/rules/figure-style-guidelines.md](.claude/rules/figure-style-guidelines.md) |
-| 外部平台镜像工作流 | [.claude/rules/feishu-mirror-workflow.md](.claude/rules/feishu-mirror-workflow.md) |
+| 外部平台镜像工作流（通用总则） | [.claude/rules/writing-and-archival.md](.claude/rules/writing-and-archival.md) |
+| 飞书接入与专属坑点 | [.claude/rules/platforms/feishu.md](.claude/rules/platforms/feishu.md) |
+| Notion 接入与专属坑点 | [.claude/rules/platforms/notion.md](.claude/rules/platforms/notion.md) |
 | 实验重跑 vs 保留旧版 | [.claude/rules/rerun-vs-archive.md](.claude/rules/rerun-vs-archive.md) |
 | 代码变更讲解 skill | [.claude/skills/own/code-walkthrough/SKILL.md](.claude/skills/own/code-walkthrough/SKILL.md) |
 | 新 session 启动入口 | [.claude/HANDOFF.md](.claude/HANDOFF.md) |

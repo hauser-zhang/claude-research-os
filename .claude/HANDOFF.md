@@ -111,7 +111,9 @@
 |------|--------|---------|
 | [research-and-reporting.md](rules/research-and-reporting.md) | 文献调研必须到可复现级，引用三步验证（搜索→读原文→留痕） | 任何文献调研 / 汇报 / 讨论输出 |
 | [figure-style-guidelines.md](rules/figure-style-guidelines.md) | 期刊级图表规范（SVG+PNG、字体、色板、尺寸） | 生成任何放入论文/PPT/外部平台的图 |
-| [feishu-mirror-workflow.md](rules/feishu-mirror-workflow.md) | 本地→飞书镜像工作流：文档结构、Writing Material 五层、联动规则、lark-cli 坑点 | 推飞书、写 Writing Material、更新主文档 |
+| [writing-and-archival.md](rules/writing-and-archival.md) | 通用写作/存档总则：文档结构、Writing Material 五层、联动规则（平台无关） | 写 Writing Material、更新主文档、推任何外部平台 |
+| [platforms/feishu.md](rules/platforms/feishu.md) | 飞书专属：Setup、lark-cli 命令、markdown 坑点 | 推飞书时 |
+| [platforms/notion.md](rules/platforms/notion.md) | Notion 专属：MCP 配置、integration share、markdown 差异 | 推 Notion 时 |
 | [rerun-vs-archive.md](rules/rerun-vs-archive.md) | 修 bug/改风格后清旧重跑 vs 保留旧版（判据=运行时间） | 实验产出更新 |
 
 ---

@@ -18,6 +18,16 @@ An open-source Claude Code template that turns multi-project research into a lay
 
 ---
 
+## TL;DR (10 seconds)
+
+1. Claude Code cascades multiple `CLAUDE.md` files by directory depth.
+2. This repo arranges them into **L1 global / L2 framework / L3 per-project** scopes, plus a wiki ⇄ threads knowledge split and a five-stage flow.
+3. `git clone` + paste one prompt → Claude bootstraps your first project in ~15 min.
+
+> Works for solo researchers running 2+ projects. Not a team/collab tool.
+
+---
+
 ## What is Research OS?
 
 Research OS turns multi-project academic research into a layered operating system on top of Claude Code.
@@ -69,7 +79,7 @@ Once a thread's experiment stage lands, you copy curated figures and metadata in
 
 ### 4. The archival problem is already solved
 
-A big share of post-project pain is "how do I put this on Feishu / Notion / Confluence now that it's done, in a way future-me can read?" Research OS ships a full external-platform mirror workflow at [`.claude/rules/feishu-mirror-workflow.md`](.claude/rules/feishu-mirror-workflow.md): document-type conventions, writing-material five-layer spec, citation three-step verification, plus a separate figure-style spec at [`figure-style-guidelines.md`](.claude/rules/figure-style-guidelines.md). Tell Claude "push this thread's results to Feishu" and the rules activate.
+A big share of post-project pain is "how do I put this on Feishu / Notion / Confluence now that it's done, in a way future-me can read?" Research OS ships a full external-platform mirror workflow at [`.claude/rules/writing-and-archival.md`](.claude/rules/writing-and-archival.md): document-type conventions, writing-material five-layer spec, citation three-step verification, plus a separate figure-style spec at [`figure-style-guidelines.md`](.claude/rules/figure-style-guidelines.md). Tell Claude "push this thread's results to Feishu" and the rules activate. Both Feishu and Notion playbooks ship in [`.claude/rules/platforms/`](.claude/rules/platforms/) — setup checklists + minimal verify commands included.
 
 ### 5. Pre-installed skills activate exactly when you need them
 
@@ -84,6 +94,10 @@ No `/plugin install` required. `git clone` gives you five skills that trigger on
 | [superpowers-test-driven-development](.claude/skills/upstream/superpowers-test-driven-development/) | [obra/superpowers](https://github.com/obra/superpowers) · MIT | New feature / bugfix — tests first |
 
 Full index with attribution: [`.claude/skills/_catalog.md`](.claude/skills/_catalog.md). Every `upstream/` skill carries a `_UPSTREAM.md` with source URL, pinned commit, license, and author credit.
+
+### 6. Bundled cross-project feedback memory — war stories, not rules
+
+[`memory/`](memory/) ships ~20 desensitized feedback notes from real multi-project use: Feishu/Notion markdown pitfalls, SSH heredoc traps, figure pipelines, Opus token guardrails, session-boundary discipline. **One researcher's war stories, not prescriptive rules** — adopt, delete, append. Private entries (`user_*.md` / `private_*.md`) stay local via `.gitignore`.
 
 ---
 
@@ -136,17 +150,15 @@ Works offline, but slower — you re-derive every section yourself instead of le
 
 ---
 
-## Architecture (30 seconds)
+## Your first week
 
-| Scope | Where | Holds |
-|-------|-------|-------|
-| **L1 · Global** | `~/.claude/` | Python / git / testing conventions |
-| **L2 · Research OS** | this repo | Skeleton, cross-project wiki, skills, ADRs, archival rules |
-| **L3 · Per-project** | `projects/<name>/` | Project charter, tracks, active threads |
-
-Claude Code's cascading `CLAUDE.md` loader walks the directory tree and layers all three automatically. No glue code.
-
-For the full diagram and the Dual-Primary / five-stage / self-evolving mechanics → [docs/architecture.md](docs/architecture.md).
+| Day | What | Where |
+|-----|------|-------|
+| 1 | Clone, paste the HANDOFF prompt, brainstorm your first project from `_example/` | `projects/<slug>/` created |
+| 2-3 | Write Stage 00 → 01 → 02 of your first thread at your own pace | `tracks/<t>/<thread>/{00,01,02}.md` |
+| 4 | Hit a friction? Append one line. Don't debate where it goes | `tracks/<t>/<thread>/frictions.md` |
+| 5+ | Wiki page a paper only when you re-read it a second time | `wiki/papers/<slug>.md` |
+| Week 2 | First meta-review from accumulated frictions | `meta/reviews/YYYY-MM-DD.md` |
 
 ---
 
@@ -160,6 +172,31 @@ For the full diagram and the Dual-Primary / five-stage / self-evolving mechanics
 | **Research ⇄ writing separation** — live process in `tracks/`, paper-ready material in `writing/<target>/` | Mixing experimental decisions with paper prose | `projects/<name>/tracks/` + `writing/` |
 
 See [docs/architecture.md](docs/architecture.md) for detailed diagrams and mechanics.
+
+---
+
+## Architecture (30 seconds)
+
+```
+~/.claude/                  (L1 · global)
+  └─ coding / testing / git conventions
+
+research-os/                (L2 · this repo — framework)
+  ├─ CLAUDE.md              ← framework constitution
+  ├─ .claude/rules/         ← archival workflows (Feishu / Notion)
+  ├─ .claude/skills/        ← brainstorming / debugging / TDD (bundled)
+  ├─ wiki/                  ← cross-project timeless knowledge
+  ├─ memory/                ← ~20 desensitized feedback notes
+  └─ projects/
+      └─ <your-project>/    (L3 · per-project)
+          ├─ CLAUDE.md      ← project charter + remote env
+          └─ tracks/<t>/<thread>/
+              └─ {00..04}.md  ← five-stage flow
+```
+
+Claude Code's cascading `CLAUDE.md` loader walks the directory tree and layers all three automatically. No glue code.
+
+For the full diagram and the Dual-Primary / five-stage / self-evolving mechanics → [docs/architecture.md](docs/architecture.md).
 
 ---
 
@@ -188,7 +225,8 @@ If the opposite happens — stale wiki, growing backlog, ADRs nobody reads — r
 | Tracks + IDEAS inbox ADR | [decisions/ADR-0002](decisions/ADR-0002-tracks-and-ideas-inbox.md) |
 | Open-source L2/L3 split ADR | [decisions/ADR-0003](decisions/ADR-0003-open-source-split.md) |
 | Learning-sources + skill own/upstream ADR | [decisions/ADR-0004](decisions/ADR-0004-learning-sources-and-skills-split.md) |
-| External-platform archival workflow (Feishu / Notion) | [.claude/rules/feishu-mirror-workflow.md](.claude/rules/feishu-mirror-workflow.md) |
+| Feishu archival playbook | [.claude/rules/platforms/feishu.md](.claude/rules/platforms/feishu.md) |
+| Notion archival playbook | [.claude/rules/platforms/notion.md](.claude/rules/platforms/notion.md) |
 | Figure style (publication-quality) | [.claude/rules/figure-style-guidelines.md](.claude/rules/figure-style-guidelines.md) |
 | Citation three-step verification | [.claude/rules/research-and-reporting.md](.claude/rules/research-and-reporting.md) |
 
@@ -219,6 +257,15 @@ The `decisions/ADR-NNNN-<slug>.md` format is taken verbatim from the ADR templat
 > *Skills extend Claude with reusable capabilities — packaged as metadata + a SKILL.md narrative + supporting references.*
 
 The three-layer skill spec (trigger description → SKILL.md narrative → `references/` for volatile detail) is the official one.
+
+---
+
+## Who is this for
+
+- **PhD students / postdocs running 2+ research projects in parallel**
+- **Scientists who write papers/theses AND run experiments** — need separation between live decisions and paper prose
+- **Researchers with Feishu / Notion / Confluence archival habit** — who want Claude to push curated updates to shared platforms on demand
+- **People who want Claude Code to remember decisions across months, not just sessions** — the wiki ⇄ threads architecture is the answer
 
 ---
 
