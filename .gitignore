@@ -110,6 +110,7 @@ memory/private_*.md
 # Large binary artifacts
 raw/papers/*.pdf
 raw/clippings/*.html
+raw/clippings/*.md
 *.pkl
 *.pth
 *.ckpt
