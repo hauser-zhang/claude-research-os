@@ -136,3 +136,4 @@ _next-session-*.md
 
 # Maintainer's private VSCode Front Matter extension config
 frontmatter.json
+.frontmatter/
