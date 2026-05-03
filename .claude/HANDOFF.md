@@ -21,6 +21,10 @@
 
 ## 1. 任务模式分流
 
+> **🔴 模式互斥（铁律）**：每个 session 只属于**一种模式**。模式 A / B / F 互不越界——模式 A 不写 `writing/**`；模式 B 不改 `tracks/**` raw 素材；模式 F 不动 `projects/**` / `writing/**` 内容。完整责任矩阵 + 红线清单见 [`docs/session-types.md`](../docs/session-types.md)。
+> **如何识别本 session 是哪种模式**：看用户首句任务在哪个目录树下落地。`projects/<name>/tracks/**` → A；`writing/**` → B；`.claude/rules/**` / `meta/**` / `docs/**` / 根 `CLAUDE.md` → F。
+> **模式越界自检**：发现自己即将 Edit / Write / SCP 到本模式红线目录 → 立即停手 + 向用户报告"我快越界"，等用户授权切换 session 类型才继续。
+
 ### 模式 A — 科研项目（走 track → 五阶段 thread）
 
 **触发关键词**：Brainstorm、文献调研、实验、模型改进、case study……
@@ -41,6 +45,14 @@
 
 **突发奇想快速落下来**：写一行到 `projects/<name>/IDEAS.md` inbox（成本 2 分钟），不立即建 thread；weekly meta-review 时 triage。
 
+**🔴 模式 A 红线**：
+
+- ❌ **禁止**写 / 改 `writing/**` 任何文件（包括 `writing/<target>/figures/` / `writing/<target>/tables/` / `writing/<target>/<section>.md`）——这是模式 B 的责任
+- ❌ **禁止** SCP / cp 远程产出直接到 `writing/<target>/figures/`——只能落 thread `tracks/<track>/<thread>/results/`
+- ❌ thread/05-writing-material.md 是 **raw 素材层（journal-neutral）**——不写按某 journal / thesis 风格 framing 的 polished prose（那是 `writing/<target>/<section>.md` 的事）
+- ✅ 所有 figures / tables / writing material **仅落 thread/**；用户起 writing session 时 cp 出去
+- 详见 [`docs/session-types.md`](../docs/session-types.md) §"模式 A 红线"
+
 ---
 
 ### 模式 B — 写作（论文 / 毕业论文 / 组会）
@@ -54,6 +66,14 @@
 - Writing Material 五层结构：一句话结论 + 中文结果段落 + 英文 PPT 文字 + 子图图例 + 论文段落草稿 + 总图例。文档开头必须有 Analysis metadata。
 - 先做 panel-level audit（提取一句话结论、检查编号/路径一致性、列 TODO），再输出。
 - 学术措辞用"提示""表明""与…一致"，避免"证明""必然"。
+
+**🔴 模式 B 红线**：
+
+- ❌ **禁止**改 `tracks/**` raw 素材（包括 thread/05-writing-material.md / 04-experiment.md / `tracks/<track>/<thread>/results/`）——它们是模式 A 的产出
+- ❌ **禁止**在 `writing/<target>/<section>.md` 中**引入新数字 / 新结论**（必须从 thread/05 引用 + 改 voice；发现需要新数字 → 标 `[TODO]` + 通知用户回模式 A 重跑）
+- ✅ 只 cp 现有 thread `results/` figures + 引用 thread/05 数字 → 写**新** prose（按目标 journal / thesis 风格 framing）
+- ✅ 发现 thread/05 raw 素材有错误 → 在 writing 文档标 `[TODO 待项目 session 修]`，**不就地改 thread**
+- 详见 [`docs/session-types.md`](../docs/session-types.md) §"模式 B 红线"
 
 ---
 
@@ -94,6 +114,14 @@
 - [`meta/frictions-backlog.md`](../meta/frictions-backlog.md)
 - [`meta/improvements-backlog.md`](../meta/improvements-backlog.md)
 - [`decisions/`](../decisions/) — 架构决策 ADR
+
+**🔴 模式 F 红线**：
+
+- ❌ **禁止**修改 `projects/<name>/tracks/**` 或 `writing/<target>/**` 的内容（thread / writing 是 A / B 的产出，meta 只观察）
+- ❌ **禁止**触发实验、SCP 远程产出、修改业务代码——那是模式 A 的职责
+- ✅ 只动**规则 / skill / docs / meta backlog / ADR**：`.claude/rules/**` / `.claude/skills/**` / `docs/**` / `meta/**` / `decisions/**` / 根 `CLAUDE.md` / `.claude/HANDOFF.md`
+- ✅ 引用 thread / writing 的 frictions 时**只读**（路径 + 行号）；不修改这些文件
+- 详见 [`docs/session-types.md`](../docs/session-types.md) §"模式 F 红线"
 
 ---
 

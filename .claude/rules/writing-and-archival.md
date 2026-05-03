@@ -36,7 +36,32 @@ Tag 体系（`[Brainstorm]` / `[Survey]` / `[Ideas]` / `[Implementation]` / `[Ex
 
 ## 3. Writing Material 五层内容结构（生成本地 md 时必须遵循）
 
-每个 Panel / 结果模块在 `writing/<target>/<chapter>/<section>.md` 中必须包含：
+### 3.0 两类宿主、两种语义（消除 ambiguity）
+
+"五层结构"在 Research OS 中**有两个不同宿主**，语义不同——历史上两处 rule 都说"必须遵循五层结构"导致 LLM 混淆（2026-05-02 vfformer/_meta-figure-terminology-standards thread §4.4 暴露）。明确区分：
+
+| 宿主 | 性质 | 写什么 | 何时写 |
+|------|------|--------|--------|
+| **`tracks/<track>/<thread>/05-writing-material.md`**（thread 五阶段终点）| **Raw 素材层 / data-grounded**（accurate + complete + journal-neutral，任何目标 journal 都能二次加工）| 一句话结论 + 中文段落（含完整数字 / 比较 / 解释 / 边界）+ PPT 英文 + 子图图例 + 论文段落草稿 + 总图例 + Analysis metadata | thread 进入 04 后，外部协作前必经一步 |
+| **`writing/<target>/<chapter>/<section>.md`**（写作 target 章节素材）| **Polished prose 层**（按目标 journal / thesis / 组会风格 framing；不引入 thread/05 之外的新数字）| 同样字段，但已按目标风格收敛措辞（学位论文 vs Nature 投稿 voice 不同）+ 三层溯源路径块（远程 / thread / writing）+ inline 图表渲染 | writing session 起笔时从 thread/05 cp 后改写 |
+
+**关键 invariant**：
+
+- **数据数字只在 thread/05 第一次落地**。`writing/<target>/<section>.md` 只允许从 thread/05 *引用 + 改 voice*，不允许 *引入新数字*。若发现某结论需要新数字 → 回 thread 04 重跑实验补 → 回流到 thread/05 → 再 cp 到 writing/。
+- **thread/05 → writing/<section> 是单向的**：writing session 改 prose **不污染** thread/05；thread 重跑后回流走"writing/<section> 显式重 cp"流程，不自动同步。
+
+**🔴 红线（黑名单）—— Session 边界**：
+
+| Session 类型 | 允许写 | 严禁写 |
+|-------------|--------|--------|
+| **Project session**（任务在 `tracks/<track>/<thread>/`）| ✅ 写 / 改 `tracks/<track>/<thread>/05-writing-material.md`（raw 素材层） | ❌ **禁止**写 / 改 `writing/<target>/**`（polished 是 writing session 的责任） |
+| **Writing session**（任务在 `writing/<target>/`）| ✅ 写 / 改 `writing/<target>/<section>.md`（polished prose 层） | ❌ **禁止**改 `tracks/<track>/<thread>/05-writing-material.md` 等 raw 素材（只读引用 + cp）。发现 raw 错误 → 标 `[TODO]` + 通知用户回 project session 修 |
+
+下面 §3.1–§3.3 描述的是**两类宿主共同的字段骨架**；具体 voice / framing 差异由各自的上位规则覆盖（thread/05 voice 见 L2 `research-and-reporting.md`；`writing/<target>/<section>.md` voice 见对应 `writing/<target>/.claude/rules/<target-style>.md`，例如 `writing/.claude/rules/chinese-phd-thesis.md`）。
+
+### 3.1 字段骨架（thread/05 与 writing/<section> 共同）
+
+每个 Panel / 结果模块必须包含：
 
 1. **详细中文结果段落**
    - 引用具体数字、比较对象、统计口径

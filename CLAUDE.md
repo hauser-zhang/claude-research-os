@@ -105,6 +105,10 @@ flowchart LR
 
 论文写作素材层建议单独拆 `05-writing-material.md`（五层结构：一句话结论 / 中文段落 / 英文 PPT 文字 / 子图图例 / 论文段落草稿 / 总图例）。
 
+> **🔴 重要区分**：`tracks/<track>/<thread>/05-writing-material.md` 是 **raw 素材层（data-grounded，journal-neutral）**——accurate + complete，任何目标 journal / thesis 都能二次加工，**不是 polished prose**。Polished prose（按目标风格 framing）写到 `writing/<target>/<chapter>/<section>.md`，由 **writing session** 负责（不在 project session 范围）。两者职责矩阵详见 [`docs/session-types.md`](docs/session-types.md) 与 L2 [`.claude/rules/writing-and-archival.md §3.0`](.claude/rules/writing-and-archival.md)。
+>
+> **禁止跨 session 越界**：project session 只写 thread/05；writing session 只写 writing/<section>，把 thread/05 当只读 source。
+
 ---
 
 ## 4. Self-Evolving 机制
