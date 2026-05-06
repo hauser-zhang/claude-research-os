@@ -31,11 +31,14 @@ desktop.ini
 # Private projects (not part of the open-source template)
 # See ADR-0003: only the framework skeleton + projects/README.md is tracked;
 # each maintainer's actual projects live under projects/<name>/ and are
-# gitignored by default.
+# gitignored by default. The _example folder is the public sample (kept
+# tracked so open-source consumers can see a minimal working project).
 # ──────────────────────────────────────────────────────────────────────────
-projects/VFormer/
+projects/*/
+!projects/_example/
 
-# Project data (never commit raw datasets or experiment outputs)
+# Project data (never commit raw datasets or experiment outputs;
+# applies to the _example sample too, to keep it lightweight)
 projects/*/data/
 projects/*/results/
 projects/*/runs/
@@ -137,3 +140,4 @@ _next-session-*.md
 # Maintainer's private VSCode Front Matter extension config
 frontmatter.json
 .frontmatter/
+.superpowers/
