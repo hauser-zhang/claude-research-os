@@ -14,6 +14,8 @@ the model's system prompt on session start.
 
 Silent (exit 0, no stdout) when healthy.
 Cross-project: scans projects/*/.claude/HANDOFF.md under the repo root.
+Underscore-prefixed projects (e.g. _example, _template-*) are skipped — by
+convention they are read-only reference skeletons that never advance.
 """
 import json
 import sys
@@ -38,6 +40,8 @@ def main() -> int:
             continue
         project_dir = handoff.parent.parent
         project_name = project_dir.name
+        if project_name.startswith("_"):
+            continue
         try:
             handoff_mtime = handoff.stat().st_mtime
         except OSError:

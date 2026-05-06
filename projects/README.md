@@ -12,6 +12,8 @@
 
 The open-source template ships with `_example/` as a read-only reference you can point Claude at when bootstrapping your own project. Do not build on top of `_example/`; copy from it into your own `projects/<your-name>/`. See [`_example/HOW-TO-USE-THIS-EXAMPLE.md`](_example/HOW-TO-USE-THIS-EXAMPLE.md).
 
+> **Naming convention**: project directories starting with an underscore (`_example/`, `_template-*/`) are treated as **read-only reference skeletons** — the HANDOFF staleness hooks ([`.claude/hooks/handoff-staleness-check.py`](../.claude/hooks/handoff-staleness-check.py), [`handoff-stop-reminder.py`](../.claude/hooks/handoff-stop-reminder.py)) skip them so they don't generate false-positive "thread inventory stale" warnings. Use a normal name (no leading `_`) for your own active projects.
+
 The maintainer also mounts a private first-class project here; that directory is gitignored and never reaches the open-source repo.
 
 ---

@@ -9,6 +9,8 @@ systemMessage (shown to user in UI) instead of additionalContext:
   2. HANDOFF.md mtime > 72h
 
 Advisory only — exit 0 without continue:false, doesn't block anything.
+Underscore-prefixed projects (e.g. _example, _template-*) are skipped — by
+convention they are read-only reference skeletons that never advance.
 """
 import json
 import sys
@@ -33,6 +35,8 @@ def main() -> int:
             continue
         project_dir = handoff.parent.parent
         project_name = project_dir.name
+        if project_name.startswith("_"):
+            continue
         try:
             handoff_mtime = handoff.stat().st_mtime
         except OSError:

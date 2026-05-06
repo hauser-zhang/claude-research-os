@@ -11,6 +11,8 @@
 # block anything.
 #
 # Cross-project: scans projects/*/.claude/HANDOFF.md.
+# Underscore-prefixed projects (e.g. _example, _template-*) are skipped — by
+# convention they are read-only reference skeletons that never advance.
 
 set -u
 
@@ -24,6 +26,7 @@ for handoff in "$REPO_ROOT"/projects/*/.claude/HANDOFF.md; do
     [ -f "$handoff" ] || continue
     project_dir="$(dirname "$(dirname "$handoff")")"
     project_name="$(basename "$project_dir")"
+    case "$project_name" in _*) continue ;; esac
     handoff_mtime=$(stat -c %Y "$handoff" 2>/dev/null || echo 0)
     [ "$handoff_mtime" -gt 0 ] || continue
 
