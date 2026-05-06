@@ -1,51 +1,116 @@
-# Notion 平台接入规范（初版）
+# Notion 平台接入规范
 
 > **通用写作 / 存档规范**见 `../writing-and-archival.md`。本文件只覆盖 Notion 平台的**接入方式**和**平台特定坑点**。
 > **项目专属 Notion 文档树**（database 设计、tag 属性）见 L3 `projects/<name>/.claude/rules/notion-doc-structure.md`（若启用 Notion 才建）。
 >
-> **状态**：初版。结构镜像 `feishu.md`；接入细节基于 Notion 官方 MCP server + Notion API 公开约定。首次实际接入时请按 Setup 验证命令确认版本差异。
+> **状态**：v2（2026-05-04 校对官方文档）。Notion 已弃用 self-host npx MCP server，全面转向 hosted MCP（OAuth）。本规范同步重写接入路径；块 API / markdown 坑点不变。
 
 ---
 
 ## Setup
 
-### 前置
+### 三档接入方式（按推荐度从高到低）
 
-- Notion 账号 + 在 <https://www.notion.so/my-integrations> 创建 **Internal Integration**，拿到 `NOTION_API_KEY`（格式 `secret_xxx` 或 `ntn_xxx`）
-- 在目标工作区页面**手动 Share 给 Integration**（Notion 权限模型：integration 默认看不到任何页面，必须逐个 share）
-- Node.js ≥ 18（运行官方 MCP server）
+| 方式 | 适用 | 维护状态 |
+|------|------|---------|
+| **A. 官方 Claude Code plugin**（推荐）| Claude Code 用户、想一键拿到 skill + slash command | 官方 actively maintained |
+| **B. 手动配置 hosted MCP** | 只要 MCP server、不要 plugin 附带的 skill；或要跨客户端复用 | 官方 actively maintained |
+| **C. self-host npx server**（deprecated）| 仅遗留环境保留；新接入**不要走这条** | 官方将 sunset，issue/PR 不再 monitor |
 
-### 步骤（Claude Desktop / Claude Code）
+### 方式 A：官方 Claude Code plugin（推荐）
 
-1. 在 Notion 创建 integration + 授权目标页面 / database
-2. 在 `~/.claude/settings.json`（或 Claude Desktop 的 `claude_desktop_config.json`）的 `mcpServers` 加：
+Notion 官方 plugin（[`makenotion/claude-code-notion-plugin`](https://github.com/makenotion/claude-code-notion-plugin)）一条命令同时装好 MCP server + 4 个 skill（knowledge capture / meeting intelligence / research docs / spec-to-implementation）+ slash command（`/Notion:search`、`/Notion:create-page`、`/Notion:database-query`、`/Notion:create-task` 等）。
 
-   ```json
-   {
-     "mcpServers": {
-       "notion": {
-         "command": "npx",
-         "args": ["-y", "@notionhq/notion-mcp-server"],
-         "env": {
-           "NOTION_API_KEY": "secret_xxxxxxxxxxxx"
-         }
-       }
-     }
-   }
+**步骤**：
+
+1. 在 Claude Code 内依次执行：
+
+   ```
+   /plugin marketplace add makenotion/claude-code-notion-plugin
+   /plugin install notion-workspace-plugin@notion-plugin-marketplace
    ```
 
-3. 重启 Claude Code / Claude Desktop
-4. 验证：让 Claude 调用 `notion` MCP 的 `search` 或 `retrieve-page` 工具，返回真实页面元数据 → 配置成功
+2. 首次调用任何 Notion 工具时，Claude Code 触发 OAuth 浏览器弹窗——登录 Notion → 选 workspace → 同意权限 → 自动跳回。**不再需要手动建 Internal Integration、不再需要复制 API key**。
+3. 在 Notion 里把要 Claude 访问的页面 / database **share 给 integration**（详见下面 §Page 授权）。
+4. 验证：在 Claude Code 里说"用 notion 找一下 xxx"或运行 `/Notion:search <关键词>`，返回页面命中即成功。
+
+**优点**：MCP + skill + slash command 一并装好，Claude 知道常见场景下该用哪个工具。
+**缺点**：plugin 注册到 Claude Code，跨客户端（Claude Desktop / Cursor）不复用配置。
+
+### 方式 B：手动配置 hosted MCP
+
+只想要 MCP server、不想要 plugin 附带的 skill 时走这条。配置进 `~/.claude/settings.json`，跨项目共享。
+
+```json
+{
+  "mcpServers": {
+    "notion": {
+      "url": "https://mcp.notion.com/mcp",
+      "transport": "streamable-http"
+    }
+  }
+}
+```
+
+**步骤**：
+
+1. 把上面 JSON merge 进 `~/.claude/settings.json` 的 `mcpServers` 字段。
+2. 重启 Claude Code。
+3. 在 Claude Code 内运行 `/mcp` → 找到 `notion` 项 → 走 OAuth 授权流程（浏览器弹窗 → Notion 登录 → 同意 → 自动回填 token）。
+4. Notion 里 share 页面给 integration（详见下面 §Page 授权）。
+5. 验证：让 Claude 调用 `notion` MCP 的 `search` / `retrieve-page` 工具。
+
+**注意**：
+- URL 必须用 `https://mcp.notion.com/mcp`（Streamable HTTP transport，更高效）；老的 SSE 端点 `https://mcp.notion.com/sse` 是 fallback，**不要用**。
+- Access token 有效期 1 小时，refresh token 自动轮转——MCP 客户端透明处理。
+- **不再需要 `NOTION_API_KEY` / Internal Integration Secret**——OAuth 全替代。
+
+### 方式 C（deprecated）：self-host npx + API key
+
+仅作记录，新接入**不要走这条**。老写法（保留在 git 历史里）：`npx -y @notionhq/notion-mcp-server` + `NOTION_API_KEY` 环境变量。
+
+[`makenotion/notion-mcp-server`](https://github.com/makenotion/notion-mcp-server) README 原话：
+> "We may sunset this local MCP server repository in the future. Issues and pull requests here are not actively monitored."
+
+**迁移建议**：删 settings.json 里的老 `notion` 配置 → 走方式 A 或 B。
+
+### Page 授权（A / B 都适用，但行为与旧版 Internal Integration 不同）
+
+> **重要**（2026-05-04 实测更正）：hosted MCP 的 OAuth 流程**默认开 workspace 级访问**——授权时 Notion 会让你二选一：
+>
+> 1. **"Use Claude across this entire workspace"**（默认推荐 / 多数人会勾）→ integration 拿到**整 workspace 读写权**，所有现存和未来新建的 page / database 都能直接 search / fetch / update，**不需要逐页 share**
+> 2. **"Use Claude on selected pages"** → 仅授权当时勾选的 page 子树，等同旧 Internal Integration 的白名单模式
+>
+> 老的 Internal Integration（self-host npx + API key 时代）才**必须**逐页 share，hosted MCP OAuth 不是。本仓库早期文档承袭了旧描述，现已更正。
+
+**自检"我授权了哪种范围"**：让 Claude 调用 `notion-search` 一个空泛 query（如 "test"）——
+
+- 能看到 workspace 里多年前建的老 page → 选了 entire workspace（已是全量接入）
+- 只能看到最近自己手动 share 的几页 → 选了 selected pages（按下面入口扩范围）
+
+**想限制范围 / 事后调整白名单**：
+
+1. **页面级 share**（少量精确控制）：打开目标页面 → 右上角 `•••` → `Connections` → `Add connections` → 搜你授权时挂的 integration（hosted MCP 通常显示为 "Claude" / "Notion MCP"）→ 点上去 → Confirm
+2. **批量管理**（全局视角）：Notion `Settings` → `Connections` → 找到 integration → `Access` tab → 增删授权范围
+
+**关键差异速记**（vs 飞书）：飞书"组织内默认可见、按云空间权限"；Notion OAuth "授权范围在 OAuth 同意页一次性敲定，事后改要去 Settings → Connections"。
+
+**最佳实践**：
+
+- 个人小 workspace（< 50 page）→ 直接选 entire workspace，省心
+- 多用户 / 商业 workspace → 选 selected pages，把要给 Claude 看的页拖到一个父页（如 `Claude-Accessible/`）下，授权父页面 → 子页面自动继承
 
 ### 详细文档
 
-- 官方 MCP server：<https://github.com/makenotion/notion-mcp-server>
-- Notion API：<https://developers.notion.com/>
-- 块结构参考：<https://developers.notion.com/reference/block>
+- 官方 hosted MCP 文档：<https://developers.notion.com/docs/get-started-with-mcp>
+- 官方 Claude Code plugin：<https://github.com/makenotion/claude-code-notion-plugin>
+- Notion API（block 结构等底层参考）：<https://developers.notion.com/>
+- Block 结构参考：<https://developers.notion.com/reference/block>
+- （deprecated）self-host server：<https://github.com/makenotion/notion-mcp-server>
 
 ### 核心工具能力（Notion MCP）
 
-典型提供的工具（具体命名以实际 server 版本为准）：
+典型工具（hosted MCP 与 self-host 工具名可能略有差异，以实际 server 版本为准）：
 
 - `search` — 工作区全局搜索页面 / database
 - `retrieve-page` / `retrieve-block-children` — 读取页面 / 块树
@@ -53,6 +118,8 @@
 - `update-page` / `append-block-children` / `patch-block-children` — 更新页面属性、追加块、精确改块
 - `query-database` — 过滤 / 排序 database
 - `create-comment` / `retrieve-comments` — 评论
+
+方式 A（plugin）额外提供 slash command 包装：`/Notion:search`、`/Notion:create-page`、`/Notion:create-task`、`/Notion:database-query`，底层还是上面这套工具。
 
 ---
 
