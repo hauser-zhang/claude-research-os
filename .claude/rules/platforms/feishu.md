@@ -10,14 +10,111 @@
 ### 前置
 
 - 飞书账号 + 飞书开放平台自建应用（拿到 app_id / app_secret）
-- `lark-cli` 已安装并完成首次 `lark-cli config init`、`lark-cli auth login`
+- `lark-cli` 已安装
 - 需要的 scope：文档读写、图片上传、（视任务）多维表格、知识库等
 
 ### 步骤
 
-1. `lark-cli config init`——填 app_id / app_secret
-2. `lark-cli auth login`——授权用户身份（user token）；若需机器人身份另走 `--as bot`
-3. 验证：`lark-cli docs +list`（能列出云文档 → 配置成功）
+> **概念先行**：飞书 CLI 配置分两层。`config init` 绑定的是开放平台应用（app_id / app_secret，说明“这个 CLI 是哪个应用”）；`auth login` 授权的是用户身份（user token，说明“哪个用户允许这个应用访问自己的资源”）。Bot 身份只能访问应用自己的资源，通常看不到用户个人云文档。
+
+1. 检查安装与当前状态：
+
+   ```bash
+   lark-cli --version
+   lark-cli config show
+   lark-cli auth status
+   ```
+
+2. 创建 / 绑定应用：
+
+   ```bash
+   lark-cli config init --new --brand feishu --lang zh
+   ```
+
+   命令会输出飞书网页链接 / 二维码。用户在浏览器完成创建或绑定后，CLI 会把 `appSecret` 存入系统 keychain；不要让用户把 secret 明文贴到聊天里。
+   如果 CLI 提示当前是 Agent workspace，优先用 `lark-cli config bind` 绑定已有应用；只有用户明确想在该 workspace 创建独立应用时才加 `--force-init`。
+
+   需要多个应用 profile 时使用 `--name`：
+
+   ```bash
+   lark-cli config init --new --name work --brand feishu --lang zh
+   ```
+
+3. 授权用户身份（文档归档常用域）：
+
+   ```bash
+   lark-cli auth login --domain docs,drive,wiki,markdown
+   ```
+
+   需要多维表格 / 表格再增量授权：
+
+   ```bash
+   lark-cli auth login --domain base,sheets
+   ```
+
+4. 设置默认身份为 user，避免误用 bot 身份：
+
+   ```bash
+   lark-cli config default-as user
+   ```
+
+5. 验证：
+
+   ```bash
+   lark-cli auth status
+   lark-cli auth check --scope "docx:document:create docx:document:write_only docx:document:readonly drive:file:upload search:docs:read wiki:node:create wiki:node:read wiki:space:read"
+   lark-cli docs +search --query "" --page-size 3 --format pretty
+   ```
+
+   只要 `auth status` 显示 `identity: user`、`tokenStatus: valid`，且 `docs +search` 能返回云文档，说明配置可用。
+
+### 配置文件与身份
+
+默认配置文件：
+
+```text
+~/.lark-cli/config.json
+```
+
+典型结构：
+
+```json
+{
+  "apps": [
+    {
+      "appId": "cli_xxx",
+      "appSecret": {
+        "source": "keychain",
+        "id": "appsecret:cli_xxx"
+      },
+      "brand": "feishu",
+      "lang": "zh",
+      "defaultAs": "user",
+      "users": [
+        {
+          "userOpenId": "ou_xxx",
+          "userName": "示例用户"
+        }
+      ]
+    }
+  ]
+}
+```
+
+- `apps`：本机保存的飞书 / Lark 应用配置列表
+- `appId`：开放平台应用 ID
+- `appSecret.source: keychain`：secret 存在系统 keychain，不在 JSON 中明文保存
+- `brand: feishu`：使用中国飞书域名；国际版 Lark 则是 `lark`
+- `defaultAs: user`：默认用用户身份发起 API 请求
+- `users`：已经给该应用授权过的用户
+
+身份速记：
+
+| 身份 | 含义 | 适用 |
+|------|------|------|
+| `--as user` | 使用已登录用户的 user token | 访问个人云文档、知识库、日历等 |
+| `--as bot` | 使用应用 / 机器人身份 | 应用自己的资源、机器人发消息等 |
+| `default-as: user` | 默认使用当前已授权用户 | Research OS 推送飞书文档的推荐设置 |
 
 ### 详细文档
 

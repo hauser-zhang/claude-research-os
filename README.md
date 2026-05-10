@@ -83,11 +83,12 @@ A big share of post-project pain is "how do I put this on Feishu / Notion / Conf
 
 ### 5. Pre-installed skills activate exactly when you need them
 
-No `/plugin install` required. `git clone` gives you five skills that trigger on the right moments:
+No `/plugin install` required. `git clone` gives you six skills that trigger on the right moments:
 
 | Skill | Source | Triggers on |
 |-------|--------|-------------|
 | [code-walkthrough](.claude/skills/own/code-walkthrough/) | **own** · MIT | Explaining a diff / PR review / cross-layer call tracing |
+| [guided-setup](.claude/skills/own/guided-setup/) | **own** · MIT | Step-by-step tool / account / token setup with lightweight conceptual teaching |
 | [karpathy-guidelines](.claude/skills/upstream/karpathy-guidelines/) | [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) · MIT | Writing / reviewing / refactoring any code — also baked into [CLAUDE.md §12](CLAUDE.md) as default behavior |
 | [superpowers-brainstorming](.claude/skills/upstream/superpowers-brainstorming/) | [obra/superpowers](https://github.com/obra/superpowers) · MIT | Any creative work before implementation — **including bootstrapping your first project** |
 | [superpowers-systematic-debugging](.claude/skills/upstream/superpowers-systematic-debugging/) | [obra/superpowers](https://github.com/obra/superpowers) · MIT | Any bug / test failure / unexpected behavior |

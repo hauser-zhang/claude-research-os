@@ -11,6 +11,7 @@
 | Skill | What it does | When to trigger |
 |-------|--------------|-----------------|
 | [code-walkthrough](own/code-walkthrough/SKILL.md) | 5-layer structured explanation of code changes | Explaining diffs / PR review / tracing cross-layer calls |
+| [guided-setup](own/guided-setup/SKILL.md) | Step-by-step tool/account/token setup with lightweight conceptual teaching and verification | Configuring CLIs, OAuth, external platforms, MCP, tokens, SSH, or dev environments |
 
 ---
 

@@ -132,6 +132,7 @@
 | Skill | 做什么 | 何时触发 |
 |-------|--------|---------|
 | [code-walkthrough](skills/own/code-walkthrough/SKILL.md) | 代码变更 5 层结构化讲解 | 讲解 diff / review / 解释跨层调用链 |
+| [guided-setup](skills/own/guided-setup/SKILL.md) | 带读式配置：一边配置工具 / token / 权限，一边解释原理并验证真实可用 | 用户说“带我配置”“一步一步”“顺便讲原理”“我想学习一下” |
 
 ### Rules（`.claude/rules/`）
 
