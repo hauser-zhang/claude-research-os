@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Usage Q&A / Ideas / Show & tell
+    url: https://github.com/hauser-zhang/claude-research-os/discussions
+    about: For questions about how to use the template, share your workflow on top of it, or open-ended discussion.
+  - name: 📖 Read the docs first
+    url: https://github.com/hauser-zhang/claude-research-os#readme
+    about: README, architecture doc, and ADRs cover most setup and design questions.

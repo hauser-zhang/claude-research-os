@@ -1,0 +1,85 @@
+name: 🐛 Bug report
+description: Something in the template, a rule, a skill, or a hook isn't working as documented.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report! Please fill in as much as you can — vague bugs are hard to fix.
+
+        **Before opening**: please search [existing issues](https://github.com/hauser-zhang/claude-research-os/issues?q=is%3Aissue) for duplicates.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the unexpected behavior.
+      placeholder: Claude loaded the wrong CLAUDE.md when entering projects/foo/...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+      placeholder: Claude should cascade L1 → L2 → L3 and load all three.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction steps
+      description: Minimal steps so a maintainer can reproduce. Include the exact prompt if relevant.
+      placeholder: |
+        1. git clone https://github.com/hauser-zhang/claude-research-os.git
+        2. cd claude-research-os/projects/_example/
+        3. Open Claude Code, paste: "..."
+        4. Observe ...
+    validations:
+      required: true
+
+  - type: input
+    id: commit
+    attributes:
+      label: Repo commit hash
+      description: Output of `git rev-parse --short HEAD`.
+      placeholder: e.g. 48263aa
+    validations:
+      required: true
+
+  - type: input
+    id: claude-code-version
+    attributes:
+      label: Claude Code version
+      description: Output of `claude --version` (or VSCode extension version).
+      placeholder: e.g. 1.x.x
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - macOS
+        - Linux
+        - Windows
+        - WSL
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs / output
+      description: Hook output, error messages, or transcript snippet. Use code fences.
+      render: shell
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Screenshots, related issues, hypotheses.

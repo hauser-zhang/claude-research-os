@@ -1,0 +1,64 @@
+name: ✨ Feature request
+description: Suggest a new rule, skill, hook, or template improvement.
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the suggestion! Template changes affect every fork, so we discuss direction before code.
+
+        **Before opening**: please check [existing issues](https://github.com/hauser-zhang/claude-research-os/issues?q=is%3Aissue) and [Discussions](https://github.com/hauser-zhang/claude-research-os/discussions).
+
+        If your idea is open-ended ("what do you think about X?"), please open a [Discussion](https://github.com/hauser-zhang/claude-research-os/discussions) instead.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the actual research pain — not just the proposed solution. ("In project X I kept losing track of …")
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: What new rule / skill / hook / folder / convention would solve it? Be concrete.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Existing workarounds, why they're not enough.
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      description: How much of the template does this touch?
+      options:
+        - Local addition (new rule / skill / doc — no other files affected)
+        - Cross-cutting (changes how multiple existing rules / skills behave)
+        - Structural (changes the three-scope cascade, dual-primary model, or five-stage flow — needs ADR)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: pr-willingness
+    attributes:
+      label: Are you willing to open a PR?
+      options:
+        - Yes, I'd like to implement this
+        - Yes, but I'd want guidance first
+        - No, just suggesting
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Links to related work, prior art in other projects, mock-ups.
