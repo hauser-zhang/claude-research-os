@@ -203,7 +203,7 @@ Place this before `## Referenced By`. It gives the user a shorter copy target if
 5. Key Numbers: 提取和本项目决策最相关的主结果、ablation、efficiency 指标。
 6. Reproduction Notes: code URL、数据集、训练/推理入口、compute 风险、最小复现建议。
 7. Limitations / Open Questions: 至少 3 条，面向当前项目目标。
-8. How It Connects To Our Work: 分 `foundation/proposal`、`reproduction`、`future method track` 三点写。
+8. How It Connects To Our Work: 分 `background/proposal`、`reproduction`、`future method track` 三点写。
 9. References: 用 Author, Year, Venue/DOI/URL 格式。
 
 额外要求：
@@ -256,7 +256,7 @@ Place the following section before `## Referenced By`, then ask the external GPT
 6. Key Numbers 是否缺主结果、ablation、efficiency 指标；每个数字标 Source table/section。
 7. Reproduction Notes 是否缺 code URL、数据集、训练/推理入口、compute 风险。
 8. Limitations / Open Questions 是否足够面向当前项目。
-9. How It Connects To Our Work 是否能支持 foundation/proposal、reproduction、future method track。
+9. How It Connects To Our Work 是否能支持 background/proposal、reproduction、future method track。
 
 输出格式：
 ## Patch Notes for <PAPER_SHORT_NAME>
