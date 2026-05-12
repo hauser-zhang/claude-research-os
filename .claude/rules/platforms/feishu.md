@@ -146,8 +146,8 @@ Project root
 
 ```text
 Project root
-├── [Track] foundation
-│   └── [Thread] initial-survey-and-proposal
+├── [Track] <track-name>
+│   └── [Thread] <thread-name>
 │       ├── [Brainstorm] ...
 │       └── [Survey] ...
 ├── [Ideas] Inbox
@@ -163,7 +163,7 @@ Project root
 - `docs +update --command overwrite` 后，文档标题可能被正文 H1 重置。每次 overwrite 后必须重新 patch 标题，并用 `wiki nodes list` 验证。
 - 溯源 / reference / linked evidence 信息默认放到文档末尾 `Appendix`，不要挡在正文第一屏；Reference / Index 页面除外。
 - 表格优先 2-3 列；大索引、状态表、论文清单优先放 Base，不要塞进普通文档宽表。
-- 表格链接用短 label，例如 `[Open](...)`、`[Plan](...)`、`[LRT](...)`；不要放裸 URL，也不要在裸 URL 后直接接 `;`、`,` 等标点。
+- 表格链接用短 label，例如 `[Open](...)`、`[Plan](...)`、`[Paper](...)`；不要放裸 URL，也不要在裸 URL 后直接接 `;`、`,` 等标点。
 - Markdown 表格无法稳定设置列宽，只能通过短 label、拆表、少列控制；需要精确列宽时用 XML table 的 `<colgroup>`。
 
 ## 1.1.1 项目 L3 飞书结构合同

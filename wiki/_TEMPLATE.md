@@ -61,7 +61,7 @@ paper 推荐不要只写一个泛泛 Details。重点论文请用以下顶层章
 4. Key Numbers — 主结果、消融、效率指标；每个数字标 Source table/figure/section
 5. Reproduction Notes — code URL、入口命令/脚本、数据、checkpoint、compute 风险、最小复现建议
 6. Limitations / Open Questions — 论文没证明什么、适用边界、外推风险
-7. How It Connects To Our Work — foundation/proposal、reproduction、future method track 三类连接
+7. How It Connects To Our Work — background/proposal、reproduction、future method track 三类连接
 
 如果只是 stub，可以先只保留 TL;DR + Core Contribution + TODO；升级到 draft 时再补齐上述结构。
 -->
