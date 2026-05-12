@@ -75,16 +75,22 @@ updated: YYYY-MM-DD
 ## 使用说明
 
 1. **复制此模板** → `wiki/<type>/<slug>.md` → 改 frontmatter `type` / `wiki_id` / `title`
-2. **Status 语义**:
+2. **语言习惯**:
+   - **正文内容默认中文为主**，符合本仓库的中文阅读 / 研究习惯。
+   - **标题、论文名、方法名、模型名、数据集名、指标名、代码符号保留英文**，不要为了中文化强行翻译专业名词。例如 `# PLaT (Wang et al. 2026)`、`Data Flow`、`latent trajectory length`、`Pass@k` 都可以保留英文。
+   - **frontmatter 字段值优先使用官方英文元数据**，如论文标题、venue、authors、DOI、URL。
+   - **表格列名按读者用途选择**：需要和论文 / 代码对照时可用英文；解释、判断、TODO、风险分析尽量中文。
+   - 从外部英文阅读 session 复制回来的内容，落盘前要改写为中文为主的研究笔记，只保留必要英文术语。
+3. **Status 语义**:
    - `stub` = 刚建, 只有 TL;DR 一句话
    - `draft` = 正在写, 多数 section 有内容但未定稿
    - `mature` = 稳定可引用, 被 ≥1 个 thread 正式引用
    - `stale` = 内容过时或被新 synthesis 替代, 待修或降级
-3. **Type 差异** (subtype 专属字段见 `wiki/<type>/_README.md`):
+4. **Type 差异** (subtype 专属字段见 `wiki/<type>/_README.md`):
    - `paper` — 原始论文 · 有 authors/year/venue/doi
    - `concept` — 跨 thread 的术语/方法 · 无额外字段, 但强调 See also 交叉引用
    - `dataset` — 数据源 · url/version/license
    - `benchmark` — 评测任务 · url/task/primary_metric
    - `synthesis` — 跨多页综合论点 · depends_on 列引用源
-4. **Touched By 同步**: 在 thread 的 phase doc frontmatter 写 `wiki_touches: [<slug>]`, lint 会反向填充本页 `touched_by` + `## Touched By` 章节
-5. **引用**: 生物学/实验结论必须配文献, 三步验证 (搜索 → 读原文 → 留原文支持句), 见 `.claude/rules/research-and-reporting.md`
+5. **Touched By 同步**: 在 thread 的 phase doc frontmatter 写 `wiki_touches: [<slug>]`, lint 会反向填充本页 `touched_by` + `## Touched By` 章节
+6. **引用**: 生物学/实验结论必须配文献, 三步验证 (搜索 → 读原文 → 留原文支持句), 见 `.claude/rules/research-and-reporting.md`
