@@ -32,6 +32,30 @@ Tag 体系（`[Brainstorm]` / `[Survey]` / `[Ideas]` / `[Implementation]` / `[Ex
 
 **具体父子结构**（哪些子页归属哪个模块）见对应 L3 rule：`projects/<name>/.claude/rules/<platform>-doc-structure.md`。
 
+### 2.1 镜像层级不可扁平化
+
+外部平台必须保留 Research OS 的语义层级，不能把 phase 子页直接挂在项目根页下。项目根页是 dashboard；track 页承接研究方向；thread 页才承接五阶段 phase 子页。
+
+```text
+Project root page
+├── [Track] <track-name>
+│   └── [Thread] <thread-name>
+│       ├── [Brainstorm] ...
+│       ├── [Survey] ...
+│       ├── [Ideas/Proposal] ...
+│       ├── [Implementation] ...
+│       ├── [Experimental Results] ...
+│       └── [Writing Material] ...
+├── [Ideas] Inbox
+└── [Plan] Project Plan
+```
+
+根页应写项目级信息：Project Overview、Current Status、Track Index、IDEAS Inbox、Project Plan、Next Actions、Update Log。根页**不直接承载** `[Brainstorm]` / `[Survey]` / `[Implementation]` 等 phase 子页；这些必须在对应 thread 页下面。
+
+`projects/<name>/IDEAS.md` 是项目级 inbox，属于项目根页视图，不归属任何单个 track/thread，除非某条 idea 被 promote 成正式 thread。
+
+Project Plan 是项目级规划视图，用来协调 track/thread 的阶段输出和时间安排；它可以先作为占位页存在，后续再补具体日期、负责人、会议节点和风险。
+
 ---
 
 ## 3. Writing Material 五层内容结构（生成本地 md 时必须遵循）

@@ -54,7 +54,11 @@ updated: YYYY-MM-DD
 1. **TL;DR**（可证伪命题 / 核心一句话）
 2. **Core Contribution**（方法一句话）
 3. **Data Flow**（完整输入→输出维度链，引用 `research-and-reporting.md` 标准）
-4. **Key Numbers**（主结果表）
-5. **Limitations / Open Questions**
-6. **How it connects to our work**（哪些 thread 引用、如何引用）
-7. **Referenced by**（保留——双向链接合同；lint 会同步 frontmatter `touched_by` 与本章节）
+4. **Training Recipe / Method Details**（loss / reward / optimizer / 数据构造 / 参数更新范围 / 训练阶段；若是系统论文可写 System Design / Deployment Details）
+5. **Key Numbers**（主结果、消融、效率指标；每个数字标 Source table/figure/section）
+6. **Reproduction Notes**（code URL、入口脚本/命令、数据、checkpoint、compute 风险、最小复现建议；没有代码则明确写未找到）
+7. **Limitations / Open Questions**
+8. **How it connects to our work**（至少分 `background/proposal`、`reproduction`、`future method track` 三类；不适用项可写为何不适用）
+9. **Referenced by**（保留——双向链接合同；lint 会同步 frontmatter `touched_by` 与本章节）
+
+说明：`stub` 页可以只写 TL;DR / Core Contribution / TODO；`draft` 页应尽量补齐 Data Flow、Method Details、Key Numbers、Limitations；`mature` 页需要 Reproduction Notes 和项目连接判断足够具体，能支撑后续 proposal 或 reproduction 决策。
