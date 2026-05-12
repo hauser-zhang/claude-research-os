@@ -156,6 +156,46 @@ Project root
 
 ---
 
+## 1.1 页面标题、图标和表格可读性
+
+- Feishu 侧边栏标题应是短而稳定的结构 label，可以在最前面加一个类型 icon，例如 `🧭 [Track] ...`、`🧵 [Thread] ...`、`📚 [Reference] ...`。
+- 如果当前 CLI 没有原生 page icon API，可用标题前缀 icon 作为可自动化 fallback；项目 L3 规则应明确每类页面的 icon 表。
+- `docs +update --command overwrite` 后，文档标题可能被正文 H1 重置。每次 overwrite 后必须重新 patch 标题，并用 `wiki nodes list` 验证。
+- 溯源 / reference / linked evidence 信息默认放到文档末尾 `Appendix`，不要挡在正文第一屏；Reference / Index 页面除外。
+- 表格优先 2-3 列；大索引、状态表、论文清单优先放 Base，不要塞进普通文档宽表。
+- 表格链接用短 label，例如 `[Open](...)`、`[Plan](...)`、`[LRT](...)`；不要放裸 URL，也不要在裸 URL 后直接接 `;`、`,` 等标点。
+- Markdown 表格无法稳定设置列宽，只能通过短 label、拆表、少列控制；需要精确列宽时用 XML table 的 `<colgroup>`。
+
+## 1.1.1 项目 L3 飞书结构合同
+
+项目级 `projects/<name>/.claude/rules/feishu-doc-structure.md` 至少应包含：
+
+- `Root`：项目根页 URL / token 和根页职责。
+- `Required Tree`：规范 Wiki 层级，默认采用 `Project root → Track → Thread → Phase`，项目级 Ideas / Plan / Reference 挂在 root 下。
+- `Current Node Tokens`：稳定记录 wiki node token 与真实 object token，避免每次重新解析。
+- `Local Source Mapping`：本地权威文件到 Feishu 镜像页 / Base / Sheet 的映射。
+- `Update Rules`：项目特定同步规则，并继承评论保护协议。
+- `Page Type Icons`：页面类型到标题图标 / sidebar label 的映射。
+- `Layout Rules`：正文第一屏、appendix、表格、索引、Base 的项目约定。
+- `Lessons`：项目特定坑点；跨项目坑点回流到本 L2 规则或 `feishu-mirror-sync` skill。
+
+创建或重整 L3 结构时，使用 `.claude/skills/own/feishu-mirror-sync/references/generic-doc-structure.md` 作为脱敏模板。
+
+## 1.2 评论保护协议（强制）
+
+飞书评论是协作上下文，不是可丢弃格式。任何可能重排、替换或删除正文的更新，都必须先保护评论。
+
+- **禁止无快照 overwrite。** 在执行 `docs +update --command overwrite`、大范围 `block_replace`、跨段 `str_replace`、`block_delete` 前，必须先用 `drive file.comments list` 拉取评论快照。评论保护是“需要恢复历史评论”的明确场景，应省略 `is_solved` 查询全量评论，避免已解决评论在结构性更新中永久丢失；普通“查看评论”任务仍遵守 lark-drive 默认只查未解决评论。
+- **快照保存位置。** 临时评论快照写入 `/tmp/research-os-feishu-comments/<YYYYMMDD-HHMMSS>/<doc_token>.json`，不要提交到仓库；如果用户要求长期审计，再把脱敏摘要写入项目 handoff。
+- **快照内容。** 至少保留 `comment_id`、`is_solved`、`is_whole`、`quote`、首条评论正文、全部 reply、`user_id`、`create_time`、`update_time`。不要只保存评论数量。
+- **更新后比对。** 写入完成后再次 `drive file.comments list`，按 `comment_id` / `quote` / 首条评论正文比对是否丢失或脱锚。
+- **恢复策略。** 如果原评论对应的 `quote` 仍存在，优先用 `drive +add-comment --selection-with-ellipsis` 恢复为局部评论；如果能可靠定位 block id，也可用 `--block-id`。如果正文已被本次更新删除或改写到无明确对应位置，评论可以不恢复，但必须在交付说明中列出“未恢复原因”。
+- **作者与时间不可伪造。** 重新创建的评论无法保持原 `comment_id`、原作者和原时间。恢复评论正文时在开头注明 `[restored by Codex after Feishu mirror update; original author/time: ...]`，保留原评论内容和必要 replies。
+- **不要制造重复。** 如果更新后原评论仍存在，不要再创建一条重复评论；只记录它已保留。只对确认为缺失 / 脱锚且仍有对应正文的评论做恢复。
+- **恢复前验证锚点。** 使用 `docs +fetch --api-version v2 --doc-format markdown` 或 `--detail with-ids` 确认 quote / block 仍在当前文档，再写评论。
+
+---
+
 ## 2. 图片插入（飞书专属限制）
 
 **背景**：`lark-cli docs +media-insert` API 只能将图片**追加到文档末尾**，无法精确插入段落中间。

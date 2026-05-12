@@ -53,7 +53,18 @@ updated: YYYY-MM-DD
 ## Details
 
 <!-- 充分展开, 可分多个 subsection -->
-<!-- paper: Data Flow / Key Numbers / Limitations -->
+<!--
+paper 推荐不要只写一个泛泛 Details。重点论文请用以下顶层章节替代/展开：
+1. Core Contribution — 核心方法和它相对 prior work 的差异
+2. Data Flow — 完整输入→中间表示→输出；尽量写 token / hidden state / latent / module 接口
+3. Training Recipe / Method Details — objective、loss/reward、参数更新范围、数据、超参、训练阶段
+4. Key Numbers — 主结果、消融、效率指标；每个数字标 Source table/figure/section
+5. Reproduction Notes — code URL、入口命令/脚本、数据、checkpoint、compute 风险、最小复现建议
+6. Limitations / Open Questions — 论文没证明什么、适用边界、外推风险
+7. How It Connects To Our Work — foundation/proposal、reproduction、future method track 三类连接
+
+如果只是 stub，可以先只保留 TL;DR + Core Contribution + TODO；升级到 draft 时再补齐上述结构。
+-->
 <!-- concept: 伪代码或公式 / 直觉类比 / 典型实例 / Variants -->
 <!-- dataset: Schema / Access / 统计 / Known Issues -->
 <!-- benchmark: Task & Metric / Leaderboard / Split / Pitfalls -->

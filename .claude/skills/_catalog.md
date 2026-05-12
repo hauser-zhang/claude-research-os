@@ -11,6 +11,7 @@
 | Skill | What it does | When to trigger |
 |-------|--------------|-----------------|
 | [code-walkthrough](own/code-walkthrough/SKILL.md) | 5-layer structured explanation of code changes | Explaining diffs / PR review / tracing cross-layer calls |
+| [feishu-mirror-sync](own/feishu-mirror-sync/SKILL.md) | Stable local Markdown → Feishu Wiki/Doc/Base mirror workflow, including comment snapshots/restoration, titles/icons, readable tables, paper links, and postflight checks | Syncing Research OS project pages, phase docs, Paper Index, paper pages, or dashboards to Feishu |
 | [guided-setup](own/guided-setup/SKILL.md) | Step-by-step tool/account/token setup with lightweight conceptual teaching and verification | Configuring CLIs, OAuth, external platforms, MCP, tokens, SSH, or dev environments |
 | [literature-ingest](own/literature-ingest/SKILL.md) | Research OS 文献摄入闭环：官方来源核验、raw PDF 下载、wiki/papers 笔记、tracks/**/01-survey 回流、survey 后精读候选判断、外部 GPT full-file rewrite / patch-notes prompt | 广泛 survey、下载文献、建立 paper wiki、更新项目 survey、或让外部 AI 精读重点 paper 后回填 |
 
