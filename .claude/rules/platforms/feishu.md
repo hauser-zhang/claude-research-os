@@ -128,9 +128,31 @@
 
 映射表（Tag、同步方式）见 `../writing-and-archival.md` §2——此处只补充飞书侧的具象化：
 
-- **父子结构**：每个 Tag 对应一个飞书子页（`[Brainstorm]` `[Survey]` ...），归属到 thread 父页；具体挂法见 L3 `feishu-doc-structure.md`
+- **父子结构**：飞书知识库节点必须保留 `Project root → [Track] → [Thread] → [Phase]`。每个 phase Tag 对应一个飞书子页（`[Brainstorm]` `[Survey]` ...），且只能归属到对应 `[Thread]` 父页；具体挂法见 L3 `feishu-doc-structure.md`
 - **项目主文档**：飞书根页，包含索引表 + 更新日志表
+- **项目级页面**：`[Ideas] Inbox` 和 `[Plan] Project Plan` 挂在项目根页下，因为它们跨 track/thread；不要挂到某个 thread 下，除非具体 idea 已 promote
 - **图片托管**：由飞书自己的 media token 系统托管，上传后拿 `img_token` 插入
+
+禁止结构：
+
+```text
+Project root
+├── [Brainstorm] ...
+├── [Survey] ...
+└── [Implementation] ...
+```
+
+正确结构：
+
+```text
+Project root
+├── [Track] foundation
+│   └── [Thread] initial-survey-and-proposal
+│       ├── [Brainstorm] ...
+│       └── [Survey] ...
+├── [Ideas] Inbox
+└── [Plan] Project Plan
+```
 
 ---
 
@@ -174,6 +196,21 @@
 - 英文双引号 → 改中文引号或去掉
 - 多行 `>` blockquote → 改普通段落
 - 特殊 shell 字符 → heredoc 中正确转义
+
+### 3.6 `--content @file` 只能用当前目录内相对路径
+
+`lark-cli docs +update --content @/abs/path/file.xml` 会被拒绝，报错类似：`--file must be a relative path within the current directory`。
+
+**解决**：
+
+```bash
+cd /path/to/content-dir
+lark-cli docs +update --api-version v2 --doc <DOC_TOKEN> \
+  --command append \
+  --content @content.xml
+```
+
+不要把这当成权限错误；这是 CLI 的路径校验规则。需要临时 XML 时，可以把文件放到 `/tmp`，然后以 `/tmp` 为 `workdir` 调用相对路径。
 
 ---
 
